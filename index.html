@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>React Pomodoro</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <style type="text/css">
       body {
@@ -34,13 +34,15 @@
       }
 
       .timer {
-        height: 430px;
         width: 310px;
         border-radius: 8px;
         display: inline-block;
         background-color: #f2f3f6;
         box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.13), 8px 8px 40px rgba(0, 0, 0, 0.12);
         position: relative;
+        text-align: center;
+        color: #353849;
+        padding-bottom: 50px;
       }
 
       .play {
@@ -79,21 +81,100 @@
         background: linear-gradient(to bottom, #eb6267, #cf3845); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
       }
 
+      .play.done {
+        background: #55ab6d;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #83e2b7, #55ab6d);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #83e2b7, #55ab6d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        box-shadow: 0px 19px 20px -10px rgba(85, 171, 79, 0.38);
+      }
+      .play.done::before {
+        background: #55ab6d;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #65cd9e, #55ab6d);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #65cd9e, #55ab6d); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+
       .play > .fa {
         position: relative;
         z-index: 1;
+      }
+
+      .fa-play {
         left: 3px;
+      }
+
+      .monitor {
+        margin-top: 35px;
+        display: inline-block;
+        width: 250;
+        height: 250px;
+        position: relative;
+      }
+
+      .clock {
+        font-size: 35px;
+        font-weight: 700;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .label {
+        text-align: center;
+        box-sizing: border-box;
+        padding: 0px 30px;
+        font-size: 14px;
+        color: #74768a;
+        font-weight: 100;
+        margin-bottom: 9px;
+      }
+
+      h2 {
+        box-sizing: border-box;
+        padding: 0px 20px;
+        margin-bottom: -40px;
+        font-size: 33px;
       }
     </style>
   </head>
   <body cz-shortcut-listen="true">
     <div class="app">
       <div id="timer" class="timer">
-        oi
+        <!--<h2>Well done!</h2>-->
+        <div class="monitor">
+          <div class="circle">
+            <svg class="CircularProgressbar " viewBox="0 0 100 100"><circle class="CircularProgressbar-background" cx="50" cy="50" r="50" style="fill: transparent;"></circle><path class="CircularProgressbar-trail" d="
+                  M 50,50
+                  m 0,-37.5
+                  a 37.5,37.5 0 1 1 0,75
+                  a 37.5,37.5 0 1 1 0,-75
+                " stroke-width="5" fill-opacity="0" style="stroke: rgb(213, 215, 217); stroke-width: 1.5;"></path><path class="CircularProgressbar-path" d="
+                  M 50,50
+                  m 0,-37.5
+                  a 37.5,37.5 0 1 1 0,75
+                  a 37.5,37.5 0 1 1 0,-75
+                " stroke-width="5" fill-opacity="0" style="stroke: rgb(96, 194, 141); stroke: rgb(234, 83, 96); stroke-width: 3; stroke-dasharray: 235.619px, 235.619px; stroke-dashoffset: 80px;"></path></svg>
+          </div>
+          <div class="clock"></div>
+        </div>
+        <div class="label">
+          <strong>Task:</strong> [APP/BACK] Mediação para solicitação de vínculo - OUTRAS REGRAS
+        </div>
         <button class="play">
-          <i class="fa fa-play"></i>
+          <i class="fa fa-stop"></i>
         </button>
       </div>
     </div>
   </body>
 </html>
+
+<script>
+  var clock = document.querySelector('#timer .clock')
+
+  setInterval(() => {
+    var date = new Date().toTimeString().split(" ")[0].split(":")
+
+    clock.innerHTML = `${date[1]} : ${date[2]}`
+  }, 1000)
+</script>
