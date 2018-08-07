@@ -1,0 +1,99 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>React Pomodoro</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <style type="text/css">
+      body {
+        background: #d9dadc;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #f5f7f9, #d9dadc);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #f5f7f9, #d9dadc); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        font-family: Open Sans, arial, sans-serif;
+        margin: 0;
+      }
+
+      .app {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+
+        height: 100vh;
+        width: 100vw;
+      }
+
+      .timer {
+        height: 430px;
+        width: 310px;
+        border-radius: 8px;
+        display: inline-block;
+        background-color: #f2f3f6;
+        box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.13), 8px 8px 40px rgba(0, 0, 0, 0.12);
+        position: relative;
+      }
+
+      .play {
+        border: none;
+        height: 70px;
+        width: 70px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        overflow: hidden;
+        cursor: pointer;
+
+        background: #cf3845;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #ea8379, #cf3845);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #ea8379, #cf3845); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        box-shadow: 0px 19px 20px -10px rgba(207, 56, 69, 0.38);
+
+        font-size: 20px;
+        color: white;
+      }
+
+      .play::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        
+        top: 13%;
+        left: 0px;
+        z-index: 0;
+        background: #cf3845;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #eb6267, #cf3845);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #eb6267, #cf3845); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+
+      .play > .fa {
+        position: relative;
+        z-index: 1;
+        left: 3px;
+      }
+    </style>
+  </head>
+  <body cz-shortcut-listen="true">
+    <div class="app">
+      <div id="timer" class="timer">
+        oi
+        <button class="play">
+          <i class="fa fa-play"></i>
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
