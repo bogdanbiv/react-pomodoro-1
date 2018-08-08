@@ -136,6 +136,36 @@
         margin-bottom: -40px;
         font-size: 33px;
       }
+
+      .options {
+        height: 26px;
+        padding: 20px 0px 5px;
+        display: inline-block;
+      }
+
+      .options ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .options .option {
+        display: inline-block;
+        padding: 4px 10px;
+        background-color: #dedede;
+        color: #353849;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      .options .option.active {
+        background-color: #e85e6a;
+        color: #ffffff;
+      }
+
+
+      
     </style>
   </head>
   <body cz-shortcut-listen="true">
@@ -160,6 +190,13 @@
         </div>
         <div class="label">
           <strong>Task:</strong> [APP/BACK] Mediação para solicitação de vínculo - OUTRAS REGRAS
+        </div>
+        <div class="options">
+          <ul>
+            <li class="option active">40 min</li>
+            <li class="option">5 min</li>
+            <li class="option">15 min</li>
+          </ul>
         </div>
         <button class="play">
           <i class="fa fa-stop"></i>
