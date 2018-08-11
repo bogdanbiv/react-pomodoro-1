@@ -1,18 +1,27 @@
 import Immutable, { merge } from 'seamless-immutable'
 
-export const UPDATE_COUNTER = 'search/UPDATE_COUNTER'
-export const UPDATE_MODE = 'search/UPDATE_MODE'
-export const UPDATE_CONFIG = 'search/UPDATE_CONFIG'
+export const UPDATE_COUNTER = 'timer/UPDATE_COUNTER'
+export const UPDATE_MODE = 'timer/UPDATE_MODE'
+export const UPDATE_CONFIG = 'timer/UPDATE_CONFIG'
 
 // Only milliseconds here
 
 const initialState = Immutable({
-  counter: 0,
+  counter: 2700000,
   mode: 'pomodoro',
   config: {
-    pomodoro: 2700000,
-    short: 300000,
-    long: 900000
+    pomodoro: {
+      duration: 2700000,
+      label: 'Pomodoro'
+    },
+    short: {
+      duration: 300000,
+      label: 'Short break'
+    },
+    long: {
+      duration: 900000,
+      label: 'Long break'
+    }
   }
 })
 
@@ -49,7 +58,7 @@ export const decrement = () => (dispatch, getState) => {
 
 export const setMode = mode => (dispatch, getState) => {
   const { config } = getState().timer
-  const clock = config[mode]
+  const clock = config[mode].duration
 
   dispatch({
     type: UPDATE_MODE,
