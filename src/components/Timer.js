@@ -199,8 +199,12 @@ class Timer extends Component {
         )}
 
         <Options visible={options}>
-          {modes.map(mode => (
-            <Option active={activeMode === mode} onClick={() => setMode(mode)}>
+          {modes.map((mode, i) => (
+            <Option
+              key={`option${i}`}
+              active={activeMode === mode}
+              onClick={() => setMode(mode)}
+            >
               {config[mode].label}
             </Option>
           ))}

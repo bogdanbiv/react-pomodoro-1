@@ -2,13 +2,16 @@ import React from 'react'
 import styled from 'styled-components'
 
 import Timer from 'components/Timer'
+import TaskList from 'components/TaskList'
 
 const App = () => (
   <Main className="App">
     <TimerContainer>
       <Timer />
     </TimerContainer>
-    <ListContainer />
+    <ListContainer>
+      <TaskList />
+    </ListContainer>
   </Main>
 )
 
