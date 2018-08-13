@@ -160,8 +160,15 @@ class Timer extends Component {
 
   render = () => {
     const { finished, currentAction, options } = this.state
-    const { config, setMode, mode: activeMode } = this.props
+    const {
+      currentTask,
+      openTasks,
+      setMode,
+      config,
+      mode: activeMode
+    } = this.props
     const modes = Object.keys(config)
+    const current = openTasks.find(task => task.id === currentTask)
 
     return (
       <TimerBox optionsVisible={options}>
@@ -191,10 +198,9 @@ class Timer extends Component {
           <Clock>{this.getTimer()}</Clock>
         </Monitor>
 
-        {true && (
+        {current && (
           <Label className="margin-below" active={activeMode === 'pomodoro'}>
-            <strong>Your taks is </strong> Mediação para solicitação de vínculo
-            e outras regras
+            <strong>Your taks is </strong> {current.title}
           </Label>
         )}
 
@@ -425,7 +431,10 @@ const Toggle = styled.button`
 const mapStateToProps = state => ({
   counter: state.timer.counter,
   mode: state.timer.mode,
-  config: state.timer.config
+  config: state.timer.config,
+
+  openTasks: state.tasks.open,
+  currentTask: state.tasks.current
 })
 
 const mapDispatchToProps = dispatch =>
