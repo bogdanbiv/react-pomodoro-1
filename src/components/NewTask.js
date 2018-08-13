@@ -11,8 +11,17 @@ class NewTask extends Component {
     estimate: ''
   }
 
-  addTask = e => {
+  hasValue = () => this.state.title.trim().length
+
+  onSubmit = e => {
     e.preventDefault()
+
+    if (this.hasValue()) {
+      this.addTask()
+    }
+  }
+
+  addTask = () => {
     const { title, estimate } = this.state
     const { createTask } = this.props
 
@@ -37,7 +46,7 @@ class NewTask extends Component {
 
   render = () => {
     return (
-      <NewItemForm onSubmit={this.addTask}>
+      <NewItemForm onSubmit={this.onSubmit}>
         <InputContainer width="64%" marginLeft="0">
           <InputTitle>What will you work on?</InputTitle>
           <Input
@@ -59,7 +68,7 @@ class NewTask extends Component {
           />
         </InputContainer>
         <InputContainer width="7.5%" marginLeft="1%">
-          <Submit type="submit" placeholder="2h 20m" />
+          <Submit active={this.hasValue()} type="submit" placeholder="2h 20m" />
         </InputContainer>
       </NewItemForm>
     )
@@ -125,6 +134,14 @@ const Submit = styled.input`
   font-size: 13px;
   font-weight: 100;
   cursor: pointer;
+  transition: all linear 0.2s;
+
+  ${props =>
+    !props.active &&
+    `
+    opacity: .4;
+    cursor: default;
+  `};
 `
 
 const mapDispatchToProps = dispatch =>
