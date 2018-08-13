@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       return merge(
         state,
         {
-          cloased: action.tasks
+          closed: action.tasks
         },
         { deep: true }
       )
@@ -58,6 +58,21 @@ export const createTask = task => (dispatch, getState) => {
   })
 }
 
+export const removeTask = id => (dispatch, getState) => {
+  const { open, closed } = getState().tasks
+  const openTasks = open.filter(task => task.id !== id)
+  const closedTasks = closed.filter(task => task.id !== id)
+
+  dispatch({
+    type: UPDATE_OPEN_TASKS,
+    tasks: openTasks
+  })
+  dispatch({
+    type: UPDATE_CLOSED_TASKS,
+    tasks: closedTasks
+  })
+}
+
 export const closeTask = id => (dispatch, getState) => {
   const { open, closed } = getState().tasks
   const task = open.find(task => task.id === id)
@@ -66,11 +81,27 @@ export const closeTask = id => (dispatch, getState) => {
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
-    openTasks
+    tasks: openTasks
   })
   dispatch({
     type: UPDATE_CLOSED_TASKS,
-    closedTasks
+    tasks: closedTasks
+  })
+}
+
+export const reopenTask = id => (dispatch, getState) => {
+  const { open, closed } = getState().tasks
+  const task = closed.find(task => task.id === id)
+  const openTasks = open.concat(task)
+  const closedTasks = closed.filter(task => task.id !== id)
+
+  dispatch({
+    type: UPDATE_OPEN_TASKS,
+    tasks: openTasks
+  })
+  dispatch({
+    type: UPDATE_CLOSED_TASKS,
+    tasks: closedTasks
   })
 }
 

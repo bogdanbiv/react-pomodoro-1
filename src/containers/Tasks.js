@@ -3,22 +3,59 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { updateCurrent } from 'modules/tasks'
+import { updateCurrent, removeTask, closeTask, reopenTask } from 'modules/tasks'
 import { setMode } from 'modules/timer'
 import NewTask from 'components/NewTask'
 import TaskList from 'components/TaskList'
 
 class Tasks extends Component {
+  onDelete = id => {
+    const { removeTask, timerActions, updateCurrent } = this.props
+    const confirmationMessage =
+      "Are you sure you want to delete this task? This action can't be undone."
+    const r = window.confirm(confirmationMessage)
+
+    if (r === true) {
+      timerActions.stop()
+      updateCurrent('')
+      removeTask(id)
+    }
+  }
+
+  onClose = id => {
+    const { closeTask, timerActions, updateCurrent } = this.props
+    const confirmationMessage =
+      'Is this task done? \nCongratulations! What a productive day 🎉'
+    const r = window.confirm(confirmationMessage)
+
+    if (r === true) {
+      timerActions.stop()
+      updateCurrent('')
+      closeTask(id)
+    }
+  }
+
+  onReopen = id => {
+    const { reopenTask } = this.props
+    const confirmationMessage = 'Do you really want to reopen this task?'
+    const r = window.confirm(confirmationMessage)
+
+    if (r === true) {
+      reopenTask(id)
+    }
+  }
+
+  onPlay = id => {
+    const { setMode, timerActions, updateCurrent } = this.props
+
+    timerActions.stop()
+    updateCurrent(id)
+    setMode('pomodoro')
+    timerActions.play()
+  }
+
   render = () => {
-    const {
-      updateCurrent,
-      timerActions,
-      closedTasks,
-      timerState,
-      openTasks,
-      current,
-      setMode
-    } = this.props
+    const { closedTasks, timerState, openTasks, current } = this.props
 
     return (
       <TaskBox>
@@ -35,19 +72,35 @@ class Tasks extends Component {
             isRunning={timerState.running}
             actions={[
               {
+                icon: 'check',
+                onClick: id => this.onClose(id)
+              },
+              {
+                icon: 'times',
+                onClick: id => this.onDelete(id)
+              },
+              {
                 icon: 'play',
-                onClick: id => {
-                  updateCurrent(id)
-                  timerActions.stop()
-                  setMode('pomodoro')
-                  timerActions.play()
-                }
+                onClick: id => this.onPlay(id)
               }
             ]}
           />
         </section>
         <section>
-          <TaskList data={closedTasks} title="Done" />
+          <TaskList
+            title="Done"
+            data={closedTasks}
+            actions={[
+              {
+                icon: 'history',
+                onClick: id => this.onReopen(id)
+              },
+              {
+                icon: 'times',
+                onClick: id => this.onDelete(id)
+              }
+            ]}
+          />
         </section>
       </TaskBox>
     )
@@ -77,6 +130,9 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateCurrent,
+      removeTask,
+      reopenTask,
+      closeTask,
       setMode
     },
     dispatch

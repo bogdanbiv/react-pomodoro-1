@@ -69,7 +69,12 @@ class NewTask extends Component {
           />
         </InputContainer>
         <InputContainer width="7.5%" marginLeft="1%">
-          <Submit active={this.hasValue()} type="submit" placeholder="2h 20m" />
+          <Submit
+            active={this.hasValue()}
+            type="submit"
+            value="ADD"
+            placeholder="2h 20m"
+          />
         </InputContainer>
       </NewItemForm>
     )

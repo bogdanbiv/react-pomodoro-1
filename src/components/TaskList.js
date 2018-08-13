@@ -10,8 +10,6 @@ class TaskList extends Component {
       return null
     }
 
-    //console.log(data)
-
     return (
       <div>
         <SectionTitle>{title}</SectionTitle>
@@ -20,27 +18,29 @@ class TaskList extends Component {
             <ListItem key={item.id}>
               <Title>{item.title}</Title>
               <Misc>
-                {item.estimate && (
+                <MiscEntry>
+                  <strong>Time spent: </strong>
+                  {timeFormatter(item.spent) || '0m'}
+                </MiscEntry>
+                {!!item.estimate && (
                   <MiscEntry>
                     <strong>Time planned: </strong>
                     {timeFormatter(item.estimate)}
                   </MiscEntry>
                 )}
-                <MiscEntry>
-                  <strong>Time spent: </strong>
-                  {timeFormatter(item.spent) || '0m'}
-                </MiscEntry>
                 {item.id === current && isRunning && <Running />}
               </Misc>
               <Actions className="actions">
-                {actions.map(action => (
-                  <Action
-                    key={item.id + action.icon}
-                    onClick={() => action.onClick(item.id)}
-                  >
-                    <i className={`fa fa-${action.icon}`} />
-                  </Action>
-                ))}
+                {actions &&
+                  actions.map(action => (
+                    <Action
+                      className={action.icon}
+                      key={item.id + action.icon}
+                      onClick={() => action.onClick(item.id)}
+                    >
+                      <i className={`fa fa-${action.icon}`} />
+                    </Action>
+                  ))}
               </Actions>
             </ListItem>
           ))}
@@ -70,6 +70,7 @@ const ListItem = styled.li`
   box-sizing: border-box;
   margin: 1px 0px 0px 0px;
   position: relative;
+  border-radius: 2px;
 
   color: #74768a;
 
@@ -114,11 +115,27 @@ const Actions = styled.div`
   transform: translateY(-50%);
   opacity: 0;
   transition: all linear 0.2s;
+
+  .times {
+    font-size: 22px;
+    margin-top: -5px;
+  }
+
+  .check {
+    font-size: 19px;
+    margin-top: -2px;
+  }
+
+  .history {
+    font-size: 19px;
+    margin-top: -2px;
+  }
 `
 
 const Action = styled.div`
-  display: inline-block;
+  float: left;
   cursor: pointer;
+  margin-left: 10px;
 `
 
 export default TaskList
