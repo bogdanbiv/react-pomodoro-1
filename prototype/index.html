@@ -10,27 +10,6 @@
 
 
 
-      .play > .fa {
-        position: relative;
-        z-index: 1;
-      }
-
-      .fa-play {
-        left: 3px;
-      }
-
-      .task-list {
-        width: 85%;
-        margin-right: 5%;
-        margin: 0 auto;
-        padding: 20px 0px;
-        color: #353849;
-      }
-
-      .section-title {
-        margin-bottom: 5px;
-      }
-
       .task-list li {
         width: 100%;
         background-color: #f7f7f7;
@@ -41,14 +20,6 @@
         margin: 1px 0px 0px 0px;
 
         color: #74768a;
-      }
-
-      .list-finished {
-        opacity: .5;
-      }
-
-      .list {
-        margin-bottom: 40px;
       }
 
       .task-list li .title {
@@ -72,99 +43,15 @@
         color: rgb(234, 83, 96);
       }
 
-      .new-item {
-        width: 100%;
-        display: inline-block;
-        margin-bottom: 20px;
-      }
 
-      .title-container {
-        width: 65%;
-      }
-      .estimate-container {
-        width: 26.5%;
-        margin-left: .5%;
-      }
-      .button-container {
-        width: 7.5%;
-        margin-left: .5%;
-      }
-      .add-container {
-        float: left;
-        position: relative;
-      }
-      .add-container h2 {
-        width: 100%;
-        display: inline-block;
-        font-weight: 400;
-        font-size: 11px;
-        padding: 0px;
-        position: absolute;
-        top: -3px;
-        left: 8px;
-        color: #828388;
-      }
-      .new-item-title {
-        width: 100%;
-        display: inline-block;
-        background-color: transparent;
-        border: none;
-        border-radius: 3px;
-        background: #ffffff;
-        font-weight: 100;
-        font-size: 17px;
-        padding: 24px 8px 11px 8px;
-        margin-top: 0px;
-        color: #74768a;
-      }
-      .new-item-title::placeholder {
-        color: #b8b9c3;
-      }
 
-      .add-button {
-        background: #9ed2ad;
-        background: -webkit-linear-gradient(to bottom, #bde6d3, #9ed2ad);
-        background: linear-gradient(to bottom, #bde6d3, #9ed2ad);
-        box-shadow: 1px 3px 35px -4px rgba(85, 171, 79, 0.26);
-        display: inline-block;
-        width: 100%;
-        height: 56px;
-        border: none;
-        border-radius: 3px;
-        color: white;
-        font-size: 13px;
-        font-weight: 100;
-        cursor: pointer;
-      }
+
 
     </style>
   </head>
   <body cz-shortcut-listen="true">
     <div class="app">
-      <div class="timer-container center-content">
-        <div id="timer" class="timer">
-          <!--<h2>Well done!</h2>-->
-          <div class="monitor">
-            <div class="circle">
 
-            </div>
-            <div class="clock"></div>
-          </div>
-          <div class="label">
-            <strong>Task:</strong> [APP/BACK] Mediação para solicitação de vínculo - OUTRAS REGRAS
-          </div>
-          <div class="options">
-            <ul>
-              <li class="option active">40 min</li>
-              <li class="option">5 min</li>
-              <li class="option">15 min</li>
-            </ul>
-          </div>
-          <button class="play">
-            <i class="fa fa-stop"></i>
-          </button>
-        </div>
-      </div>
       <div class="list-container">
         <div class="task-list">
           <h3 class="section-title">New task</h3>
