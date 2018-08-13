@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { createTask } from 'modules/tasks'
+import { timeParser } from 'utils'
 
 class NewTask extends Component {
   state = {
@@ -27,7 +28,7 @@ class NewTask extends Component {
 
     createTask({
       title,
-      estimate
+      estimate: timeParser(estimate)
     })
 
     this.setState({
