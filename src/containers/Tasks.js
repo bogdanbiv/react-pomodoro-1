@@ -5,11 +5,26 @@ import styled from 'styled-components'
 
 import { createTask } from 'modules/tasks'
 import NewTask from 'components/NewTask'
+import TaskList from 'components/TaskList'
 
-class TaskList extends Component {
+class Tasks extends Component {
   render = () => {
-    console.log(this.props.data)
-    return <div>Ei</div>
+    return (
+      <TaskBox>
+        <section>
+          <SectionTitle>New Task</SectionTitle>
+          <NewTask />
+        </section>
+        <section>
+          <SectionTitle>To do</SectionTitle>
+          <TaskList data={this.props.openTasks} />
+        </section>
+        <section>
+          <SectionTitle>Done</SectionTitle>
+          <TaskList data={this.props.closedTasks} />
+        </section>
+      </TaskBox>
+    )
   }
 }
 
@@ -38,4 +53,4 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskList)
+export default connect(mapStateToProps, mapDispatchToProps)(Tasks)

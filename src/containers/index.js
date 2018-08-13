@@ -1,17 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Timer from 'components/Timer'
-import TaskList from 'components/TaskList'
+import Timer from './Timer'
+import Tasks from './Tasks'
 
 const App = () => (
   <Main className="App">
     <TimerContainer>
       <Timer />
     </TimerContainer>
-    <ListContainer>
-      <TaskList />
-    </ListContainer>
+    <TasksContainer>
+      <Tasks />
+    </TasksContainer>
   </Main>
 )
 
@@ -30,7 +30,7 @@ const TimerContainer = styled.section`
   justify-content: center;
 `
 
-const ListContainer = styled.section`
+const TasksContainer = styled.section`
   width: 65%;
   height: 100vh;
   float: left;
