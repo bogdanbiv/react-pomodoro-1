@@ -1,4 +1,5 @@
 import Immutable, { merge } from 'seamless-immutable'
+import { id } from 'utils'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
 export const UPDATE_CLOSED_TASKS = 'tasks/UPDATE_CLOSED_TASKS'
@@ -36,11 +37,16 @@ export default (state = initialState, action) => {
 
 export const createTask = task => (dispatch, getState) => {
   const { open } = getState().tasks
-  const tasks = open.concat(task)
+  const formattedTask = {
+    id: id(),
+    title: task.title,
+    estimate: task.estimate,
+    spent: 0
+  }
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
-    tasks
+    tasks: open.concat(formattedTask)
   })
 }
 
