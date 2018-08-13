@@ -7,11 +7,11 @@ export const UPDATE_CONFIG = 'timer/UPDATE_CONFIG'
 // Only milliseconds here
 
 const initialState = Immutable({
-  counter: 3000,
+  counter: 2700000,
   mode: 'pomodoro',
   config: {
     pomodoro: {
-      duration: 3000,
+      duration: 2700000,
       label: 'Pomodoro'
     },
     short: {
