@@ -16,14 +16,22 @@ const initialState = Immutable({
 export default (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_OPEN_TASKS:
-      return merge(state, {
-        open: action.tasks
-      })
+      return merge(
+        state,
+        {
+          open: action.tasks
+        },
+        { deep: true }
+      )
 
     case UPDATE_CLOSED_TASKS:
-      return merge(state, {
-        cloased: action.tasks
-      })
+      return merge(
+        state,
+        {
+          cloased: action.tasks
+        },
+        { deep: true }
+      )
 
     case UPDATE_CURRENT:
       return merge(state, {

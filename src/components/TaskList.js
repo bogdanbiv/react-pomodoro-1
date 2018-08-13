@@ -1,27 +1,10 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import parseMs from 'parse-ms'
-
-const timeFormatter = milli => {
-  const { days, hours, minutes } = parseMs(parseInt(milli))
-  let timeString = ''
-
-  if (days) {
-    timeString += `${days}d `
-  }
-  if (hours) {
-    timeString += `${hours}h `
-  }
-  if (minutes) {
-    timeString += `${minutes}m `
-  }
-
-  return timeString
-}
+import { timeFormatter } from 'utils'
 
 class TaskList extends Component {
   render = () => {
-    const { data, active, current, title } = this.props
+    const { data, active, current, title, actions } = this.props
 
     if (!data || !data.length) {
       return null
@@ -47,6 +30,16 @@ class TaskList extends Component {
                 </MiscEntry>
                 {item.id === current && <Running />}
               </Misc>
+              <Actions className="actions">
+                {actions.map(action => (
+                  <Action
+                    key={item.id + action.icon}
+                    onClick={() => action.onClick(item.id)}
+                  >
+                    <i className={`fa fa-${action.icon}`} />
+                  </Action>
+                ))}
+              </Actions>
             </ListItem>
           ))}
         </List>
@@ -74,8 +67,13 @@ const ListItem = styled.li`
   box-sizing: border-box;
   box-shadow: 0px 3px 29px -9px rgba(0, 0, 0, 0.13);
   margin: 1px 0px 0px 0px;
+  position: relative;
 
   color: #74768a;
+
+  &:hover .actions {
+    opacity: 1;
+  }
 `
 
 const Title = styled.h3`
@@ -105,6 +103,20 @@ const Running = styled(MiscEntry)`
   &::before {
     content: 'RUNNING';
   }
+`
+
+const Actions = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all linear 0.2s;
+`
+
+const Action = styled.div`
+  display: inline-block;
+  cursor: pointer;
 `
 
 export default TaskList

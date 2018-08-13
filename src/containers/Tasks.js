@@ -3,13 +3,13 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { createTask } from 'modules/tasks'
+import { updateCurrent } from 'modules/tasks'
 import NewTask from 'components/NewTask'
 import TaskList from 'components/TaskList'
 
 class Tasks extends Component {
   render = () => {
-    const { openTasks, closedTasks, current } = this.props
+    const { openTasks, closedTasks, current, updateCurrent } = this.props
 
     return (
       <TaskBox>
@@ -18,7 +18,18 @@ class Tasks extends Component {
           <NewTask />
         </section>
         <section>
-          <TaskList active title="To do" data={openTasks} current={current} />
+          <TaskList
+            active
+            title="To do"
+            data={openTasks}
+            current={current}
+            actions={[
+              {
+                icon: 'play',
+                onClick: id => updateCurrent(id)
+              }
+            ]}
+          />
         </section>
         <section>
           <TaskList data={closedTasks} title="Done" />
@@ -50,7 +61,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      createTask
+      updateCurrent
     },
     dispatch
   )
