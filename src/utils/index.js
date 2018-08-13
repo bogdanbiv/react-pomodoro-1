@@ -1,5 +1,45 @@
-import parseMs from 'parse-ms'
-import toMilliseconds from '@sindresorhus/to-milliseconds'
+export const toMilliseconds = object =>
+  Object.entries(object).reduce((ms, [key, value]) => {
+    const converters = {
+      days: value => value * 864e5,
+      hours: value => value * 36e5,
+      minutes: value => value * 6e4,
+      seconds: value => value * 1e3,
+      milliseconds: value => value,
+      microseconds: value => value / 1e3,
+      nanoseconds: value => value / 1e6
+    }
+
+    if (typeof value !== 'number') {
+      throw new TypeError(
+        `Expected a \`number\` for key \`${key}\`, got \`${value}\` (${typeof value})`
+      )
+    }
+
+    if (!converters[key]) {
+      throw new Error('Unsupported time key')
+    }
+
+    return ms + converters[key](value)
+  }, 0)
+
+export const parseMs = ms => {
+  if (typeof ms !== 'number') {
+    throw new TypeError('Expected a number')
+  }
+
+  const roundTowardsZero = ms > 0 ? Math.floor : Math.ceil
+
+  return {
+    days: roundTowardsZero(ms / 86400000),
+    hours: roundTowardsZero(ms / 3600000) % 24,
+    minutes: roundTowardsZero(ms / 60000) % 60,
+    seconds: roundTowardsZero(ms / 1000) % 60,
+    milliseconds: roundTowardsZero(ms) % 1000,
+    microseconds: roundTowardsZero(ms * 1000) % 1000,
+    nanoseconds: roundTowardsZero(ms * 1e6) % 1000
+  }
+}
 
 export const timeFormatter = milli => {
   const { days, hours, minutes } = parseMs(parseInt(milli, 10))

@@ -7,7 +7,7 @@ import CircularProgressbar from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
 import { decrement, setMode } from 'modules/timer'
-import parseMs from 'parse-ms'
+import { parseMs } from 'utils'
 
 class Timer extends Component {
   action = () => {
