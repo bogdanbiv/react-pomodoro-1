@@ -7,111 +7,14 @@ import CircularProgressbar from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
 import { decrement, setMode } from 'modules/timer'
-import { store } from 'store'
 import parseMs from 'parse-ms'
 
-const ring = require('assets/ring.mp3')
-
 class Timer extends Component {
-  constructor() {
-    super()
-
-    this.audio = new Audio()
-    this.audio.src = ring
-  }
-
-  state = {
-    finished: false,
-    playing: false,
-    options: true,
-    streak: [],
-
-    possibleActions: ['stop', 'play', 'check'],
-    currentAction: 'play'
-  }
-
-  interval = null
-
-  play = () => {
-    const { decrement, mode } = this.props
-
-    this.setState({
-      currentAction: 'stop',
-      playing: true,
-      options: false,
-      streak: this.state.streak.concat(mode)
-    })
-
-    this.interval = setInterval(() => {
-      const { counter } = store.getState().timer
-
-      if (counter <= 0) {
-        this.finishCounter()
-        this.audio.play()
-
-        return false
-      }
-
-      decrement()
-    }, 1000)
-  }
-
-  finishCounter = () => {
-    clearInterval(this.interval)
-
-    this.setState({
-      currentAction: 'check',
-      playing: false,
-      options: false,
-      finished: true
-    })
-  }
-
-  stop = () => {
-    const { setMode, mode } = this.props
-
-    this.setState({
-      currentAction: 'play',
-      playing: false,
-      options: true
-    })
-
-    clearInterval(this.interval)
-    setMode(mode)
-  }
-
-  check = () => {
-    const { setMode } = this.props
-
-    this.setState({
-      currentAction: 'play',
-      playing: false,
-      options: true,
-      finished: false
-    })
-
-    setMode(this.getNextMode())
-  }
-
   action = () => {
-    const { currentAction } = this.state
-    const actions = {
-      play: this.play,
-      stop: this.stop,
-      check: this.check
-    }
+    const { currentAction } = this.props.timerState
+    const { timerActions } = this.props
 
-    actions[currentAction]()
-  }
-
-  getNextMode = () => {
-    const { mode } = this.props
-
-    if (mode === 'pomodoro') {
-      return 'short'
-    } else {
-      return 'pomodoro'
-    }
+    timerActions[currentAction]()
   }
 
   getPercentage = () => {
@@ -159,7 +62,7 @@ class Timer extends Component {
   }
 
   render = () => {
-    const { finished, currentAction, options } = this.state
+    const { finished, currentAction, options } = this.props.timerState
     const {
       currentTask,
       openTasks,

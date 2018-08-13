@@ -4,12 +4,21 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 
 import { updateCurrent } from 'modules/tasks'
+import { setMode } from 'modules/timer'
 import NewTask from 'components/NewTask'
 import TaskList from 'components/TaskList'
 
 class Tasks extends Component {
   render = () => {
-    const { openTasks, closedTasks, current, updateCurrent } = this.props
+    const {
+      updateCurrent,
+      timerActions,
+      closedTasks,
+      timerState,
+      openTasks,
+      current,
+      setMode
+    } = this.props
 
     return (
       <TaskBox>
@@ -23,10 +32,16 @@ class Tasks extends Component {
             title="To do"
             data={openTasks}
             current={current}
+            isRunning={timerState.running}
             actions={[
               {
                 icon: 'play',
-                onClick: id => updateCurrent(id)
+                onClick: id => {
+                  updateCurrent(id)
+                  timerActions.stop()
+                  setMode('pomodoro')
+                  timerActions.play()
+                }
               }
             ]}
           />
@@ -61,7 +76,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      updateCurrent
+      updateCurrent,
+      setMode
     },
     dispatch
   )

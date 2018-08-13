@@ -4,7 +4,7 @@ import { timeFormatter } from 'utils'
 
 class TaskList extends Component {
   render = () => {
-    const { data, active, current, title, actions } = this.props
+    const { data, active, current, title, actions, isRunning } = this.props
 
     if (!data || !data.length) {
       return null
@@ -28,7 +28,7 @@ class TaskList extends Component {
                   <strong>Time spent: </strong>
                   {timeFormatter(item.spent) || '0m'}
                 </MiscEntry>
-                {item.id === current && <Running />}
+                {item.id === current && isRunning && <Running />}
               </Misc>
               <Actions className="actions">
                 {actions.map(action => (
