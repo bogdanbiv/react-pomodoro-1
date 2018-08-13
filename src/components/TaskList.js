@@ -66,14 +66,15 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   width: 100%;
-  background-color: #f7f7f7;
+  background-color: #fff;
   padding: 20px 94px 20px 20px;
   box-sizing: border-box;
-  margin: 1px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
   position: relative;
   border-radius: 2px;
 
-  color: #74768a;
+  color: #676464;
+  box-shadow: inset 0 -1px 0 0 #e8e8e8;
 
   &:hover .actions {
     opacity: 1;
@@ -95,7 +96,7 @@ const Misc = styled.div`
 const MiscEntry = styled.div`
   font-weight: 300;
   font-size: 12px;
-  color: #a2a4b1;
+  color: #b5b9c3;
   display: inline-block;
   margin-right: 20px;
 `
@@ -142,7 +143,7 @@ const Action = styled.div`
   color: #c3c5c7;
 
   ${props => props.isActive && 'display: block;'} &:hover {
-    color: #7daf95;
+    color: #c59b9b;
   }
 `
 

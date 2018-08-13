@@ -48,7 +48,7 @@ class NewTask extends Component {
   render = () => {
     return (
       <NewItemForm onSubmit={this.onSubmit}>
-        <InputContainer width="64%" marginLeft="0">
+        <InputContainer width="65%">
           <InputTitle>What will you work on?</InputTitle>
           <Input
             type="text"
@@ -58,7 +58,7 @@ class NewTask extends Component {
             placeholder="Refactor chat messages using Redux"
           />
         </InputContainer>
-        <InputContainer width="26.5%" marginLeft="1%">
+        <InputContainer width="27.5%">
           <InputTitle>What's your time estimate?</InputTitle>
           <Input
             name="estimate"
@@ -68,7 +68,7 @@ class NewTask extends Component {
             placeholder="2h 20m"
           />
         </InputContainer>
-        <InputContainer width="7.5%" marginLeft="1%">
+        <InputContainer width="7.5%">
           <Submit
             active={this.hasValue()}
             type="submit"
@@ -85,14 +85,20 @@ const NewItemForm = styled.form`
   width: 100%;
   display: inline-block;
   margin-bottom: 20px;
+  box-shadow: 0px 3px 23px -5px rgba(201, 212, 232, 0.6);
 `
 
 const InputContainer = styled.div`
   float: left;
   position: relative;
 
-  margin-left: ${props => props.marginLeft};
   width: ${props => props.width};
+
+  &:first-child input {
+    box-shadow: inset 0 -1px 0 0 #e8e8e8;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+  }
 `
 
 const InputTitle = styled.h2`
@@ -112,30 +118,31 @@ const Input = styled.input`
   display: inline-block;
   background-color: transparent;
   border: none;
-  border-radius: 3px;
-  background: #ffffff;
+  background: #fff;
   font-weight: 100;
-  font-size: 17px;
-  padding: 24px 8px 11px 8px;
+  font-size: 15px;
+  padding: 25px 8px 11px 8px;
   box-sizing: border-box;
   margin-top: 0px;
   color: #74768a;
+  box-shadow: inset 1px -1px 0 0 #e8e8e8;
 
   &::placeholder {
     color: #c8c9d0;
+    font-weight: 100;
   }
 `
 
 const Submit = styled.input`
-  background: #9ed2ad;
-  background: -webkit-linear-gradient(to bottom, #bde6d3, #9ed2ad);
-  background: linear-gradient(to bottom, #bde6d3, #9ed2ad);
-  box-shadow: 1px 3px 35px -4px rgba(85, 171, 79, 0.26);
+  background: #e6bab8;
+  background: -webkit-linear-gradient(to bottom right, #c9d4e8, #e6bab8);
+  background: linear-gradient(to bottom right, #c9d4e8, #e6bab8);
   display: inline-block;
   width: 100%;
-  height: 56px;
+  height: 54px;
   border: none;
-  border-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
   color: white;
   font-size: 13px;
   font-weight: 100;
@@ -145,7 +152,7 @@ const Submit = styled.input`
   ${props =>
     !props.active &&
     `
-    opacity: .4;
+    opacity: .6;
     cursor: default;
   `};
 `

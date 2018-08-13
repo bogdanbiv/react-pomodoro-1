@@ -89,11 +89,11 @@ class Timer extends Component {
             percentage={this.getPercentage()}
             styles={{
               path: {
-                stroke: finished ? 'rgb(96, 194, 141)' : 'rgb(234, 83, 96)',
+                stroke: finished ? 'rgb(96, 194, 141)' : 'rgb(232, 92, 99)',
                 strokeWidth: 3
               },
               trail: {
-                stroke: 'rgb(213, 215, 217)',
+                stroke: 'rgb(216, 198, 206)',
                 strokeWidth: 1.5
               }
             }}
