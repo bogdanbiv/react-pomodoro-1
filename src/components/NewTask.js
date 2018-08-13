@@ -99,7 +99,7 @@ const InputTitle = styled.h2`
   position: absolute;
   top: -3px;
   left: 8px;
-  color: #828388;
+  color: #a1a3ab;
 `
 
 const Input = styled.input`

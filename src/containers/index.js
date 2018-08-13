@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { decrement, setMode } from 'modules/timer'
+import { incrementTaskTime } from 'modules/tasks'
 import { store } from 'store'
 
 import Timer from './Timer'
@@ -32,7 +33,7 @@ class App extends Component {
   interval = null
 
   play = () => {
-    const { decrement, mode } = this.props
+    const { decrement, mode, incrementTaskTime } = this.props
 
     this.setState({
       currentAction: 'stop',
@@ -51,6 +52,7 @@ class App extends Component {
         return false
       }
 
+      incrementTaskTime()
       decrement()
     }, 1000)
   }
@@ -152,6 +154,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      incrementTaskTime,
       decrement,
       setMode
     },

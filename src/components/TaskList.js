@@ -10,6 +10,8 @@ class TaskList extends Component {
       return null
     }
 
+    //console.log(data)
+
     return (
       <div>
         <SectionTitle>{title}</SectionTitle>
@@ -55,6 +57,8 @@ const SectionTitle = styled.h3`
 
 const List = styled.ul`
   margin-bottom: 40px;
+  border-radius: 2px;
+  box-shadow: 0px 3px 29px -9px rgba(0, 0, 0, 0.13);
 
   ${props => !props.active && 'opacity: .5;'};
 `
@@ -63,9 +67,7 @@ const ListItem = styled.li`
   width: 100%;
   background-color: #f7f7f7;
   padding: 20px 94px 20px 20px;
-  border-radius: 2px;
   box-sizing: border-box;
-  box-shadow: 0px 3px 29px -9px rgba(0, 0, 0, 0.13);
   margin: 1px 0px 0px 0px;
   position: relative;
 

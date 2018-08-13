@@ -82,13 +82,16 @@ export const updateCurrent = id => dispatch => {
 }
 
 export const incrementTaskTime = task => (dispatch, getState) => {
+  const { mode } = getState().timer
   const { open, current } = getState().tasks
   const tasks = open.map(task => {
-    if (task.id === current) {
-      task.spent += 1000
+    let increment = { spent: 0 }
+
+    if (task.id === current && mode === 'pomodoro') {
+      increment.spent = task.spent + 1000
     }
 
-    return task
+    return { ...task, ...increment }
   })
 
   dispatch({
