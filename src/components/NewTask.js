@@ -49,13 +49,13 @@ class NewTask extends Component {
     return (
       <NewItemForm onSubmit={this.onSubmit}>
         <InputContainer width="65%">
-          <InputTitle>What will you work on?</InputTitle>
+          <InputTitle>What will you be working on?</InputTitle>
           <Input
             type="text"
             name="title"
             onChange={this.handleChange}
             value={this.state.title}
-            placeholder="Refactor chat messages using Redux"
+            placeholder="Ex: Fix the profile page layout proportions"
           />
         </InputContainer>
         <InputContainer width="27.5%">
