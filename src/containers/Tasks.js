@@ -54,6 +54,18 @@ class Tasks extends Component {
     timerActions.play()
   }
 
+  onStop = () => {
+    const { timerActions } = this.props
+
+    timerActions.stop()
+  }
+
+  isRunning = id => {
+    const { timerState, current } = this.props
+
+    return timerState.running && current === id
+  }
+
   render = () => {
     const { closedTasks, timerState, openTasks, current } = this.props
 
@@ -73,15 +85,21 @@ class Tasks extends Component {
             actions={[
               {
                 icon: 'check',
-                onClick: id => this.onClose(id)
+                onClick: this.onClose
               },
               {
                 icon: 'times',
-                onClick: id => this.onDelete(id)
+                onClick: this.onDelete
               },
               {
                 icon: 'play',
-                onClick: id => this.onPlay(id)
+                isActive: id => !this.isRunning(id),
+                onClick: this.onPlay
+              },
+              {
+                icon: 'stop',
+                isActive: id => this.isRunning(id),
+                onClick: this.onStop
               }
             ]}
           />

@@ -32,13 +32,14 @@ class TaskList extends Component {
               </Misc>
               <Actions className="actions">
                 {actions &&
-                  actions.map(action => (
+                  actions.map(({ icon, onClick, isActive = () => true }) => (
                     <Action
-                      className={action.icon}
-                      key={item.id + action.icon}
-                      onClick={() => action.onClick(item.id)}
+                      key={item.id + icon}
+                      className={icon}
+                      isActive={isActive(item.id)}
+                      onClick={() => onClick(item.id)}
                     >
-                      <i className={`fa fa-${action.icon}`} />
+                      <i className={`fa fa-${icon}`} />
                     </Action>
                   ))}
               </Actions>
@@ -136,6 +137,13 @@ const Action = styled.div`
   float: left;
   cursor: pointer;
   margin-left: 10px;
+  display: none;
+  transition: all linear 0.15s;
+  color: #c3c5c7;
+
+  ${props => props.isActive && 'display: block;'} &:hover {
+    color: #7daf95;
+  }
 `
 
 export default TaskList
