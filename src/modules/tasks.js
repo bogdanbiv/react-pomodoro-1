@@ -47,9 +47,13 @@ export const createTask = task => (dispatch, getState) => {
   const { open } = getState().tasks
   const formattedTask = {
     id: id(),
+    createdAt: Date.now(),
     title: task.title,
     estimate: task.estimate,
-    spent: 0
+    spent: {
+      total: 0,
+      daily: {}
+    }
   }
 
   dispatch({
@@ -115,11 +119,27 @@ export const updateCurrent = id => dispatch => {
 export const incrementTaskTime = task => (dispatch, getState) => {
   const { mode } = getState().timer
   const { open, current } = getState().tasks
+  const date = new Date()
+  date.setHours(0, 0, 0, 0)
+  const today = date.getTime()
+
   const tasks = open.map(task => {
-    let increment = { spent: 0 }
+    let increment = {}
 
     if (task.id === current && mode === 'pomodoro') {
-      increment.spent = task.spent + 1000
+      increment.spent = {}
+      increment.spent.daily = {}
+      let totalSpent =
+        typeof task.spent === 'number' ? task.spent : task.spent.total
+      let totalSpentDaily =
+        task.spent.daily && task.spent.daily[today]
+          ? task.spent.daily[today]
+          : 0
+
+      increment.spent.total = totalSpent + 1000
+      increment.spent.daily[today] = totalSpentDaily + 1000
+
+      console.log({ ...task, ...increment })
     }
 
     return { ...task, ...increment }

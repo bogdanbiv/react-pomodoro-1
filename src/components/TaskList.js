@@ -20,7 +20,7 @@ class TaskList extends Component {
               <Misc>
                 <MiscEntry>
                   <strong>Time spent: </strong>
-                  {timeFormatter(item.spent) || '0m'}
+                  {timeFormatter(item.spent.total) || '0m'}
                 </MiscEntry>
                 {!!item.estimate && (
                   <MiscEntry>
