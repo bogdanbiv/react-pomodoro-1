@@ -50,6 +50,7 @@ export const createTask = task => (dispatch, getState) => {
     createdAt: Date.now(),
     title: task.title,
     estimate: task.estimate,
+    status: 'open',
     spent: {
       total: 0,
       daily: {}
@@ -79,9 +80,14 @@ export const removeTask = id => (dispatch, getState) => {
 
 export const closeTask = id => (dispatch, getState) => {
   const { open, closed } = getState().tasks
-  const task = open.find(task => task.id === id)
+  const task = {
+    ...open.find(task => task.id === id),
+    ...{ status: 'closed' }
+  }
   const openTasks = open.filter(task => task.id !== id)
   const closedTasks = closed.concat(task)
+
+  console.log(closedTasks)
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
@@ -95,9 +101,14 @@ export const closeTask = id => (dispatch, getState) => {
 
 export const reopenTask = id => (dispatch, getState) => {
   const { open, closed } = getState().tasks
-  const task = closed.find(task => task.id === id)
+  const task = {
+    ...closed.find(task => task.id === id),
+    ...{ status: 'open' }
+  }
   const openTasks = open.concat(task)
   const closedTasks = closed.filter(task => task.id !== id)
+
+  console.log(openTasks)
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
@@ -138,8 +149,6 @@ export const incrementTaskTime = task => (dispatch, getState) => {
 
       increment.spent.total = totalSpent + 1000
       increment.spent.daily[today] = totalSpentDaily + 1000
-
-      console.log({ ...task, ...increment })
     }
 
     return { ...task, ...increment }
