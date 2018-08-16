@@ -9,6 +9,7 @@ import { store } from 'store'
 
 import Timer from './Timer'
 import Tasks from './Tasks'
+import { getTimer } from 'utils'
 
 const ring = require('assets/ring.mp3')
 
@@ -25,6 +26,7 @@ class App extends Component {
     running: false,
     options: true,
     streak: [],
+    title: 'React Pomodoro',
 
     possibleActions: ['stop', 'play', 'check'],
     currentAction: 'play'
@@ -52,12 +54,14 @@ class App extends Component {
         return false
       }
 
+      document.title = `${getTimer(counter)} | ${this.state.title}`
       incrementTaskTime()
       decrement()
     }, 1000)
   }
 
   finishCounter = () => {
+    document.title = this.state.title
     clearInterval(this.interval)
 
     this.setState({
@@ -77,6 +81,7 @@ class App extends Component {
       options: true
     })
 
+    document.title = this.state.title
     clearInterval(this.interval)
     setMode(mode)
   }

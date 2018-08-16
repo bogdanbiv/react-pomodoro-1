@@ -7,7 +7,7 @@ import CircularProgressbar from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
 import { decrement, setMode } from 'modules/timer'
-import { parseMs } from 'utils'
+import { getTimer } from 'utils'
 
 class Timer extends Component {
   action = () => {
@@ -21,15 +21,6 @@ class Timer extends Component {
     const { counter, mode, config } = this.props
 
     return 100 - counter / config[mode].duration * 100
-  }
-
-  getTimer = () => {
-    const { counter } = this.props
-    const zeroPad = value => `0${value}`.slice(-2)
-    const minutes = zeroPad(parseMs(counter).minutes)
-    const seconds = zeroPad(parseMs(counter).seconds)
-
-    return `${minutes} : ${seconds}`
   }
 
   getGreeting = (mode, finished, config) => {
@@ -67,6 +58,7 @@ class Timer extends Component {
       currentTask,
       openTasks,
       setMode,
+      counter,
       config,
       mode: activeMode
     } = this.props
@@ -98,7 +90,7 @@ class Timer extends Component {
               }
             }}
           />
-          <Clock>{this.getTimer()}</Clock>
+          <Clock>{getTimer(counter, { extraSpace: true })}</Clock>
         </Monitor>
 
         {current && (

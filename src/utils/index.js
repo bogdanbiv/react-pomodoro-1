@@ -85,3 +85,12 @@ export const id = () =>
   Math.random()
     .toString(36)
     .substr(2, 13)
+
+export const getTimer = (counter, { extraSpace } = {}) => {
+  const zeroPad = value => `0${value}`.slice(-2)
+  const minutes = zeroPad(parseMs(counter).minutes)
+  const seconds = zeroPad(parseMs(counter).seconds)
+  const separator = extraSpace ? ' : ' : ':'
+
+  return minutes + separator + seconds
+}
