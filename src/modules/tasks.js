@@ -124,7 +124,6 @@ export const updateCurrent = id => dispatch => {
 }
 
 export const incrementTaskTime = task => (dispatch, getState) => {
-  const { mode } = getState().timer
   const { open, current } = getState().tasks
   const date = new Date()
   date.setHours(0, 0, 0, 0)
@@ -133,7 +132,7 @@ export const incrementTaskTime = task => (dispatch, getState) => {
   const tasks = open.map(task => {
     let increment = {}
 
-    if (task.id === current && mode === 'pomodoro') {
+    if (task.id === current) {
       increment.spent = {}
       increment.spent.daily = {}
       let totalSpent =
