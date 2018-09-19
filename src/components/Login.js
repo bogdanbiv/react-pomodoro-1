@@ -7,12 +7,24 @@ import styled from 'styled-components'
 import { setUser } from 'modules/user'
 
 class Login extends PureComponent {
+  state = {
+    userMenu: false
+  }
+
   provider = new firebase.auth.GoogleAuthProvider()
 
   auth = () => firebase.auth().signInWithRedirect(this.provider)
 
+  logout = () =>
+    firebase
+      .auth()
+      .signOut()
+      .then(() => this.props.setUser(null))
+      .catch(error => alert('Logout failed.\nPlease try again.'))
+
   render() {
     const { user } = this.props
+    const { userMenu } = this.state
 
     return (
       <Header>
@@ -23,7 +35,14 @@ class Login extends PureComponent {
 
         <div>
           {user ? (
-            <span>Hello, {user.name}</span>
+            <Greetings onClick={() => this.setState({ userMenu: !userMenu })}>
+              Hello, {user.name}
+              {userMenu && (
+                <Menu>
+                  <MenuItem onClick={this.logout}>Logout</MenuItem>
+                </Menu>
+              )}
+            </Greetings>
           ) : (
             <Link onClick={this.auth}>Login with Google</Link>
           )}
@@ -45,6 +64,48 @@ const Header = styled.header`
 
   display: flex;
   justify-content: space-between;
+`
+
+const Greetings = styled.span`
+  position: relative;
+
+  &::after {
+    content: '';
+    border-color: #f3eeee transparent;
+    border-style: solid;
+    border-width: 5px 4px 0 4px;
+    width: 0;
+    height: 0;
+    margin-left: 6px;
+    top: 50%;
+    margin-top: 0px;
+    line-height: 6px;
+    position: absolute;
+  }
+`
+
+const Menu = styled.ul`
+  position: absolute;
+  box-shadow: 0 0.1em 0.25em rgba(0, 0, 0, 0.15),
+    0 0.1em 0.2em rgba(0, 0, 0, 0.2);
+  right: 0px;
+  top: 100%;
+  background-color: #fff;
+  border-radius: 2px;
+  overflow: hidden;
+`
+
+const MenuItem = styled.li`
+  width: 100%;
+  cursor: pointer;
+  min-width: 90px;
+  padding: 0px 10px;
+  box-sizing: border-box;
+  color: #676464;
+
+  &:hover {
+    background-color: #f7f7f7;
+  }
 `
 
 const Link = styled.span`
