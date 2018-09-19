@@ -146,6 +146,7 @@ const TimerContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `
 
 const TasksContainer = styled.section`
