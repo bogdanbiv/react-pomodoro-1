@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { bindActionCreators } from 'redux'
+import enhanceWithClickOutside from 'react-click-outside'
 import { connect } from 'react-redux'
 import firebase from 'firebase'
 import styled from 'styled-components'
@@ -21,6 +22,10 @@ class Login extends PureComponent {
       .signOut()
       .then(() => this.props.setUser(null))
       .catch(error => alert('Logout failed.\nPlease try again.'))
+
+  handleClickOutside() {
+    this.setState({ userMenu: false })
+  }
 
   render() {
     const { user } = this.props
@@ -68,6 +73,7 @@ const Header = styled.header`
 
 const Greetings = styled.span`
   position: relative;
+  cursor: pointer;
 
   &::after {
     content: '';
@@ -77,10 +83,10 @@ const Greetings = styled.span`
     width: 0;
     height: 0;
     margin-left: 6px;
-    top: 50%;
-    margin-top: 0px;
+    top: -2px;
     line-height: 6px;
-    position: absolute;
+    display: inline-block;
+    position: relative;
   }
 `
 
@@ -156,4 +162,6 @@ const mapDispatchToProps = dispatch =>
     dispatch
   )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(
+  enhanceWithClickOutside(Login)
+)
