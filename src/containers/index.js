@@ -138,7 +138,7 @@ const Main = styled.main`
 `
 
 const TimerContainer = styled.section`
-  width: 30%;
+  width: 35%;
   height: 100vh;
   float: left;
   background: linear-gradient(to bottom right, #c9d4e8, #e6bab8);
@@ -150,7 +150,7 @@ const TimerContainer = styled.section`
 `
 
 const TasksContainer = styled.section`
-  width: 70%;
+  width: 65%;
   height: 100vh;
   float: left;
   overflow-y: auto;
