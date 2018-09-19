@@ -9,6 +9,8 @@ import { store } from 'store'
 
 import Timer from './Timer'
 import Tasks from './Tasks'
+import Login from '../components/Login'
+
 import { getTimer } from 'utils'
 
 const ring = require('assets/ring.mp3')
@@ -119,6 +121,7 @@ class App extends Component {
     return (
       <Main className="App">
         <TimerContainer>
+          <Login />
           <Timer timerState={timerState} timerActions={timerActions} />
         </TimerContainer>
         <TasksContainer>
@@ -135,7 +138,7 @@ const Main = styled.main`
 `
 
 const TimerContainer = styled.section`
-  width: 30%;
+  width: 35%;
   height: 100vh;
   float: left;
   background: linear-gradient(to bottom right, #c9d4e8, #e6bab8);
@@ -143,10 +146,11 @@ const TimerContainer = styled.section`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `
 
 const TasksContainer = styled.section`
-  width: 70%;
+  width: 65%;
   height: 100vh;
   float: left;
   overflow-y: auto;
