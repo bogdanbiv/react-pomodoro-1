@@ -9,6 +9,8 @@ import { store } from 'store'
 
 import Timer from './Timer'
 import Tasks from './Tasks'
+import Login from '../components/Login'
+
 import { getTimer } from 'utils'
 
 const ring = require('assets/ring.mp3')
@@ -119,6 +121,7 @@ class App extends Component {
     return (
       <Main className="App">
         <TimerContainer>
+          <Login />
           <Timer timerState={timerState} timerActions={timerActions} />
         </TimerContainer>
         <TasksContainer>
