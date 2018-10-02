@@ -17,9 +17,10 @@ const { dispatch } = store
 firebase
   .auth()
   .getRedirectResult()
-  .then(({ user }) => {
-    if (user) {
-      setUser({ name: user.displayName, id: user.uid })(dispatch)
+  .then(auth => {
+    if (auth.user) {
+      console.log(auth)
+      setUser({ name: auth.user.displayName, id: auth.user.uid })(dispatch)
     }
   })
   .catch(error => console.log(error))
