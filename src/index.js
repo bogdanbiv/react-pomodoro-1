@@ -20,6 +20,7 @@ firebase
   .then(auth => {
     if (auth.user) {
       console.log(auth)
+      console.log(auth.credential.accessToken)
       setUser({ name: auth.user.displayName, id: auth.user.uid })(dispatch)
     }
   })
