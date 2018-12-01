@@ -27,7 +27,7 @@ const app = express()
 // The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
 // `Authorization: Bearer <Firebase ID Token>`.
 // when decoded successfully, the ID Token content will be added as `req.user`.
-const validateFirebaseIdToken = (req, res, next) => {
+const validateFirebaseIdToken = async (req, res, next) => {
   console.log('Check if request is authorized with Firebase ID token')
 
   if (
@@ -62,18 +62,18 @@ const validateFirebaseIdToken = (req, res, next) => {
     res.status(403).send('Unauthorized')
     return
   }
-  admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then(decodedIdToken => {
-      console.log('ID Token correctly decoded', decodedIdToken)
-      req.user = decodedIdToken
-      return next()
-    })
-    .catch(error => {
-      console.error('Error while verifying Firebase ID token:', error)
-      res.status(403).send('Unauthorized')
-    })
+
+  try {
+    const decodedIdToken = await admin.auth().verifyIdToken(idToken)
+    console.log('ID Token correctly decoded', decodedIdToken)
+    req.user = decodedIdToken
+    next()
+    return
+  } catch (error) {
+    console.error('Error while verifying Firebase ID token:', error)
+    res.status(403).send('Unauthorized')
+    return
+  }
 }
 
 app.use(cors)
