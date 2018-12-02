@@ -19,9 +19,16 @@ firebase
   .getRedirectResult()
   .then(auth => {
     if (auth.user) {
-      console.log(auth)
-      console.log(auth.credential.accessToken)
-      setUser({ name: auth.user.displayName, id: auth.user.uid })(dispatch)
+      firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then(idToken =>
+          setUser({
+            name: auth.user.displayName,
+            id: auth.user.uid,
+            token: `Bearer ${idToken}`
+          })(dispatch)
+        )
     }
   })
   .catch(error => console.log(error))
