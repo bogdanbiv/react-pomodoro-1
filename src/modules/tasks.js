@@ -47,7 +47,7 @@ export default (state = initialState, action) => {
 export const fetchTasks = () => async (dispatch, getState) => {
   try {
     const result = await getTasks()
-    console.log(result)
+    console.log(getState().user)
   } catch (err) {}
 }
 

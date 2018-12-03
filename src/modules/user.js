@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
 }
 
 export const setUser = data => dispatch => {
+  console.log(data)
   dispatch({
     type: UPDATE_USER,
     data
