@@ -1,28 +1,28 @@
-[debug] [2019-01-01T19:35:55.481Z] ----------------------------------------------------------------------
-[debug] [2019-01-01T19:35:55.486Z] Command:       /usr/local/Cellar/node/11.1.0/bin/node /usr/local/bin/firebase serve --only functions
-[debug] [2019-01-01T19:35:55.486Z] CLI Version:   6.2.2
-[debug] [2019-01-01T19:35:55.486Z] Platform:      darwin
-[debug] [2019-01-01T19:35:55.486Z] Node Version:  v11.1.0
-[debug] [2019-01-01T19:35:55.488Z] Time:          Tue Jan 01 2019 17:35:55 GMT-0200 (Horário de Verão de Brasília)
-[debug] [2019-01-01T19:35:55.488Z] ----------------------------------------------------------------------
+[debug] [2019-01-01T20:26:51.138Z] ----------------------------------------------------------------------
+[debug] [2019-01-01T20:26:51.142Z] Command:       /usr/local/Cellar/node/11.1.0/bin/node /usr/local/bin/firebase serve --only functions
+[debug] [2019-01-01T20:26:51.143Z] CLI Version:   6.2.2
+[debug] [2019-01-01T20:26:51.143Z] Platform:      darwin
+[debug] [2019-01-01T20:26:51.143Z] Node Version:  v11.1.0
+[debug] [2019-01-01T20:26:51.146Z] Time:          Tue Jan 01 2019 18:26:51 GMT-0200 (Horário de Verão de Brasília)
+[debug] [2019-01-01T20:26:51.146Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2019-01-01T19:35:55.511Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2019-01-01T19:35:55.511Z] > authorizing via signed-in user
-[debug] [2019-01-01T19:35:55.511Z] [iam] checking project react-pomodoro-2018 for permissions ["firebase.projects.get"]
-[debug] [2019-01-01T19:35:55.515Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018:testIamPermissions  
+[debug] [2019-01-01T20:26:51.171Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-01T20:26:51.172Z] > authorizing via signed-in user
+[debug] [2019-01-01T20:26:51.172Z] [iam] checking project react-pomodoro-2018 for permissions ["firebase.projects.get"]
+[debug] [2019-01-01T20:26:51.175Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018:testIamPermissions  
 
-[debug] [2019-01-01T19:35:56.724Z] <<< HTTP RESPONSE 200
-[debug] [2019-01-01T19:35:56.726Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018  
+[debug] [2019-01-01T20:26:52.492Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-01T20:26:52.494Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018  
  
-[debug] [2019-01-01T19:35:57.745Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-01T20:26:53.524Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Serving from '/Users/filipemerker/Desktop/projects/personal/react-pomodoro'...
 [info] 
 [info] i  functions: Preparing to emulate functions.
-[debug] [2019-01-01T19:35:58.882Z] Fetching environment
-[debug] [2019-01-01T19:35:58.885Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/445613158447:getServerAppConfig  
+[debug] [2019-01-01T20:26:54.828Z] Fetching environment
+[debug] [2019-01-01T20:26:54.831Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/445613158447:getServerAppConfig  
  
-[debug] [2019-01-01T19:36:00.191Z] <<< HTTP RESPONSE 200
-[debug] [2019-01-01T19:36:00.192Z] Starting @google-cloud/functions-emulator
-[debug] [2019-01-01T19:36:02.821Z] Parsing function triggers
+[debug] [2019-01-01T20:26:55.306Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-01T20:26:55.306Z] Starting @google-cloud/functions-emulator
+[debug] [2019-01-01T20:26:57.937Z] Parsing function triggers
 [info] ✔  functions: app: http://localhost:5000/react-pomodoro-2018/us-central1/app

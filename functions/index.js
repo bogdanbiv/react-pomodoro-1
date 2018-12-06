@@ -25,9 +25,11 @@ const bodyParser = require('body-parser')
 const cors = require('cors')({ origin: true })
 const db = admin.firestore()
 const app = express()
+db.settings({ timestampsInSnapshots: true })
 
-const validateFirebaseIdToken = require('./auth')
 const { tasks: tasksCollection } = require('./collections')
+const validateFirebaseIdToken = require('./auth')
+const { error } = require('./status')
 const createTask = require('./models/task')
 
 app.use(cors)
@@ -46,13 +48,9 @@ app.post('/tasks', (req, res) => {
     .doc(task.id)
     .set(task)
 
-  res.json(task)
+  res.status(200).json(task)
 })
 
-app.post('/tasks', (req, res) => {
-  firebaseHelper.firestore.createNewDocument(db, tasksCollection, req.body)
-  res.send('Create a new task')
-})
 // Update new task
 app.patch('/tasks/:taskId', (req, res) => {
   firebaseHelper.firestore.updateDocument(
@@ -61,20 +59,33 @@ app.patch('/tasks/:taskId', (req, res) => {
     req.params.taskId,
     req.body
   )
-  res.send('Update a new task')
+  res.status(200).send('Update a new task')
 })
+
 // View a task
 app.get('/tasks/:taskId', (req, res) => {
   firebaseHelper.firestore
     .getDocument(db, tasksCollection, req.params.taskId)
     .then(doc => res.status(200).send(doc))
 })
+
 // View all tasks
-app.get('/tasks', (req, res) => {
-  firebaseHelper.firestore
-    .backup(db, tasksCollection)
-    .then(data => res.status(200).send(data))
+app.get('/tasks', async (req, res) => {
+  try {
+    const tasks = []
+    const snapshot = await db
+      .collection(tasksCollection)
+      .where('owner_id', '==', req.user.user_id)
+      .get()
+
+    await snapshot.forEach(doc => tasks.push(doc.data()))
+
+    res.status(200).json(tasks)
+  } catch (err) {
+    res.status(error.status).json(error)
+  }
 })
+
 // Delete a task
 app.delete('/tasks/:taskId', (req, res) => {
   firebaseHelper.firestore.deleteDocument(
@@ -82,7 +93,7 @@ app.delete('/tasks/:taskId', (req, res) => {
     tasksCollection,
     req.params.taskId
   )
-  res.send('Document deleted')
+  res.status(200).send('Document deleted')
 })
 
 // This HTTPS endpoint can only be accessed by your Firebase Users.
