@@ -40,6 +40,7 @@ app.get('/hello', (req, res) => {
   res.send(`Hello ${req.user.name}`)
 })
 
+// Create new Task
 app.post('/tasks', (req, res) => {
   const task = createTask(req.body, req.user.user_id)
 
@@ -51,22 +52,19 @@ app.post('/tasks', (req, res) => {
   res.status(200).json(task)
 })
 
-// Update new task
-app.patch('/tasks/:taskId', (req, res) => {
-  firebaseHelper.firestore.updateDocument(
-    db,
-    tasksCollection,
-    req.params.taskId,
-    req.body
-  )
-  res.status(200).send('Update a new task')
-})
+// Get a single Task
+app.get('/tasks/:id', async (req, res) => {
+  try {
+    const task = await db
+      .collection(tasksCollection)
+      .doc(req.params.id)
+      .get()
 
-// View a task
-app.get('/tasks/:taskId', (req, res) => {
-  firebaseHelper.firestore
-    .getDocument(db, tasksCollection, req.params.taskId)
-    .then(doc => res.status(200).send(doc))
+    res.status(200).json(task.data())
+  } catch (err) {
+    console.log(err)
+    res.status(error.status).json(error)
+  }
 })
 
 // View all tasks
