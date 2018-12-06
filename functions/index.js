@@ -25,9 +25,10 @@ const bodyParser = require('body-parser')
 const cors = require('cors')({ origin: true })
 const db = admin.firestore()
 const app = express()
-const tasksCollection = 'tasks'
 
 const validateFirebaseIdToken = require('./auth')
+const { tasks: tasksCollection } = require('./collections')
+const createTask = require('./models/task')
 
 app.use(cors)
 app.use(cookieParser)
@@ -35,6 +36,17 @@ app.use(validateFirebaseIdToken)
 
 app.get('/hello', (req, res) => {
   res.send(`Hello ${req.user.name}`)
+})
+
+app.post('/tasks', (req, res) => {
+  const task = createTask(req.body, req.user.user_id)
+
+  db
+    .collection(tasksCollection)
+    .doc(task.id)
+    .set(task)
+
+  res.json(task)
 })
 
 app.post('/tasks', (req, res) => {
