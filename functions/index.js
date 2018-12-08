@@ -29,7 +29,7 @@ db.settings({ timestampsInSnapshots: true })
 
 const { tasks: tasksCollection } = require('./collections')
 const validateFirebaseIdToken = require('./auth')
-const { error } = require('./status')
+const { error, success } = require('./status')
 const createTask = require('./models/task')
 
 app.use(cors)
@@ -50,6 +50,21 @@ app.post('/tasks', (req, res) => {
     .set(task)
 
   res.status(200).json(task)
+})
+
+// Update Task
+app.put('/tasks/:id', async (req, res) => {
+  try {
+    await db
+      .collection(tasksCollection)
+      .doc(req.params.id)
+      .set(req.body, { merge: true })
+
+    res.status(success.status).json(success)
+  } catch (err) {
+    console.log(err)
+    res.status(error.status).json(error)
+  }
 })
 
 // Get a single Task
