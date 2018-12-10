@@ -29,16 +29,12 @@ db.settings({ timestampsInSnapshots: true })
 
 const { tasks: tasksCollection } = require('./collections')
 const validateFirebaseIdToken = require('./auth')
-const { error, success } = require('./status')
+const { error, success, unauthorized, forbidden } = require('./status')
 const createTask = require('./models/task')
 
 app.use(cors)
 app.use(cookieParser)
 app.use(validateFirebaseIdToken)
-
-app.get('/hello', (req, res) => {
-  res.send(`Hello ${req.user.name}`)
-})
 
 // Create new Task
 app.post('/tasks', (req, res) => {
@@ -55,15 +51,19 @@ app.post('/tasks', (req, res) => {
 // Update Task
 app.put('/tasks/:id', async (req, res) => {
   try {
-    await db
-      .collection(tasksCollection)
-      .doc(req.params.id)
-      .set(req.body, { merge: true })
+    const taskRef = db.collection(tasksCollection).doc(req.params.id)
+    const task = await taskRef.get()
+
+    if (task.data().owner_id !== req.user.user_id) {
+      throw forbidden
+    }
+
+    taskRef.set(req.body, { merge: true })
 
     res.status(success.status).json(success)
   } catch (err) {
     console.log(err)
-    res.status(error.status).json(error)
+    res.status(err.status).json(err)
   }
 })
 
@@ -100,13 +100,22 @@ app.get('/tasks', async (req, res) => {
 })
 
 // Delete a task
-app.delete('/tasks/:taskId', (req, res) => {
-  firebaseHelper.firestore.deleteDocument(
-    db,
-    tasksCollection,
-    req.params.taskId
-  )
-  res.status(200).send('Document deleted')
+app.delete('/tasks/:id', async (req, res) => {
+  try {
+    const taskRef = db.collection(tasksCollection).doc(req.params.id)
+    const task = await taskRef.get()
+
+    if (task.data().owner_id !== req.user.user_id) {
+      throw forbidden
+    }
+
+    taskRef.delete()
+
+    res.status(success.status).json(success)
+  } catch (err) {
+    console.log(err)
+    res.status(err.status).json(err)
+  }
 })
 
 // This HTTPS endpoint can only be accessed by your Firebase Users.
