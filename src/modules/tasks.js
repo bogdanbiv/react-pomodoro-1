@@ -47,7 +47,11 @@ export default (state = initialState, action) => {
 export const fetchTasks = () => async (dispatch, getState) => {
   try {
     const result = await getTasks()
-    console.log(getState().user)
+
+    dispatch({
+      type: UPDATE_OPEN_TASKS,
+      tasks: result
+    })
   } catch (err) {}
 }
 

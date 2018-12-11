@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import firebase from 'firebase'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -19,16 +20,10 @@ firebase
   .getRedirectResult()
   .then(auth => {
     if (auth.user) {
-      firebase
-        .auth()
-        .currentUser.getIdToken(true)
-        .then(idToken =>
-          setUser({
-            name: auth.user.displayName,
-            id: auth.user.uid,
-            token: `Bearer ${idToken}`
-          })(dispatch)
-        )
+      setUser({
+        name: auth.user.displayName,
+        id: auth.user.uid
+      })(dispatch)
     }
   })
   .catch(error => console.log(error))
