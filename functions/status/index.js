@@ -9,7 +9,7 @@ module.exports = {
   },
   forbidden: {
     status: 403,
-    message: "ou don't have permisson to do that"
+    message: "You don't have permisson to do that"
   },
   success: {
     status: 200,
