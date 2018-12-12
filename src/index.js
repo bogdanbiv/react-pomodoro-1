@@ -1,5 +1,4 @@
 import React from 'react'
-import axios from 'axios'
 import firebase from 'firebase'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
