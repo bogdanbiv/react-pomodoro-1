@@ -58,15 +58,8 @@ export const fetchTasks = () => async (dispatch, getState) => {
 export const createTask = task => (dispatch, getState) => {
   const { open } = getState().tasks
   const formattedTask = {
-    id: id(),
-    createdAt: Date.now(),
     title: task.title,
-    estimate: task.estimate,
-    status: 'open',
-    spent: {
-      total: 0,
-      daily: {}
-    }
+    estimate: task.estimate
   }
 
   dispatch({
