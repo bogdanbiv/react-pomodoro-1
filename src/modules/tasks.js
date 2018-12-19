@@ -1,5 +1,5 @@
 import Immutable, { merge } from 'seamless-immutable'
-import { getTasks as get, createTask as create } from 'api'
+import { get, create, remove } from 'api'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
 export const UPDATE_CLOSED_TASKS = 'tasks/UPDATE_CLOSED_TASKS'
@@ -55,32 +55,37 @@ export const fetchTasks = () => async (dispatch, getState) => {
 }
 
 export const createTask = task => async (dispatch, getState) => {
-  const { open } = getState().tasks
-  const formattedTask = {
-    title: task.title,
-    estimate: task.estimate
-  }
-  const newTask = await create(formattedTask)
+  try {
+    const { open } = getState().tasks
+    const formattedTask = {
+      title: task.title,
+      estimate: task.estimate
+    }
+    const newTask = await create(formattedTask)
 
-  dispatch({
-    type: UPDATE_OPEN_TASKS,
-    tasks: open.concat(newTask)
-  })
+    dispatch({
+      type: UPDATE_OPEN_TASKS,
+      tasks: open.concat(newTask)
+    })
+  } catch (err) {}
 }
 
-export const removeTask = id => (dispatch, getState) => {
-  const { open, closed } = getState().tasks
-  const openTasks = open.filter(task => task.id !== id)
-  const closedTasks = closed.filter(task => task.id !== id)
+export const removeTask = id => async (dispatch, getState) => {
+  try {
+    await remove(id)
+    const { open, closed } = getState().tasks
+    const openTasks = open.filter(task => task.id !== id)
+    const closedTasks = closed.filter(task => task.id !== id)
 
-  dispatch({
-    type: UPDATE_OPEN_TASKS,
-    tasks: openTasks
-  })
-  dispatch({
-    type: UPDATE_CLOSED_TASKS,
-    tasks: closedTasks
-  })
+    dispatch({
+      type: UPDATE_OPEN_TASKS,
+      tasks: openTasks
+    })
+    dispatch({
+      type: UPDATE_CLOSED_TASKS,
+      tasks: closedTasks
+    })
+  } catch (err) {}
 }
 
 export const closeTask = id => (dispatch, getState) => {
