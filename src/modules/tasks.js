@@ -61,7 +61,6 @@ export const createTask = task => async (dispatch, getState) => {
     estimate: task.estimate
   }
   const newTask = await create(formattedTask)
-  console.log(newTask)
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
