@@ -92,8 +92,9 @@ app.get('/tasks', async (req, res) => {
       .get()
 
     await snapshot.forEach(doc => tasks.push(doc.data()))
+    const sortedTasks = await tasks.sort((a, b) => b - a)
 
-    res.status(200).json(tasks)
+    res.status(200).json(sortedTasks)
   } catch (err) {
     res.status(error.status).json(error)
   }
