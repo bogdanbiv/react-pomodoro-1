@@ -25,7 +25,7 @@ const getConfig = token => ({
   }
 })
 
-export const getTasks = async () => {
+export const get = async () => {
   const token = await getToken()
 
   return axios
@@ -33,7 +33,15 @@ export const getTasks = async () => {
     .then(response => response.data)
 }
 
-export const createTask = async task => {
+export const remove = async id => {
+  const token = await getToken()
+
+  return axios
+    .delete(`${api.dev}/tasks/${id}`, getConfig(token))
+    .then(response => response.data)
+}
+
+export const create = async task => {
   const token = await getToken()
 
   return axios
