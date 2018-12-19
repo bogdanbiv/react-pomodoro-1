@@ -1,5 +1,4 @@
 import Immutable, { merge } from 'seamless-immutable'
-import { id } from 'utils'
 import { getTasks as get, createTask as create } from 'api'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
