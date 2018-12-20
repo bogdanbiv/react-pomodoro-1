@@ -89,10 +89,11 @@ export const removeTask = id => async (dispatch, getState) => {
 }
 
 export const closeTask = id => (dispatch, getState) => {
+  const update = { status: 'closed' }
   const { open, closed } = getState().tasks
   const task = {
     ...open.find(task => task.id === id),
-    ...{ status: 'closed' }
+    ...update
   }
   const openTasks = open.filter(task => task.id !== id)
   const closedTasks = closed.concat(task)
