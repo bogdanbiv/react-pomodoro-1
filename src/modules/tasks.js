@@ -1,6 +1,6 @@
 import Immutable, { merge } from 'seamless-immutable'
 import { id } from 'utils'
-import { getTasks } from 'api'
+import { getTasks as get, createTask as create } from 'api'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
 export const UPDATE_CLOSED_TASKS = 'tasks/UPDATE_CLOSED_TASKS'
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
 
 export const fetchTasks = () => async (dispatch, getState) => {
   try {
-    const result = await getTasks()
+    const result = await get()
 
     dispatch({
       type: UPDATE_OPEN_TASKS,
@@ -55,16 +55,18 @@ export const fetchTasks = () => async (dispatch, getState) => {
   } catch (err) {}
 }
 
-export const createTask = task => (dispatch, getState) => {
+export const createTask = task => async (dispatch, getState) => {
   const { open } = getState().tasks
   const formattedTask = {
     title: task.title,
     estimate: task.estimate
   }
+  const newTask = await create(formattedTask)
+  console.log(newTask)
 
   dispatch({
     type: UPDATE_OPEN_TASKS,
-    tasks: open.concat(formattedTask)
+    tasks: open.concat(newTask)
   })
 }
 

@@ -32,3 +32,11 @@ export const getTasks = async () => {
     .get(`${api.dev}/tasks`, getConfig(token))
     .then(response => response.data)
 }
+
+export const createTask = async task => {
+  const token = await getToken()
+
+  return axios
+    .post(`${api.dev}/tasks`, task, getConfig(token))
+    .then(response => response.data)
+}
