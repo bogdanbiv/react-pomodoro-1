@@ -109,10 +109,11 @@ export const closeTask = id => (dispatch, getState) => {
 }
 
 export const reopenTask = id => (dispatch, getState) => {
+  const update = { status: 'open' }
   const { open, closed } = getState().tasks
   const task = {
     ...closed.find(task => task.id === id),
-    ...{ status: 'open' }
+    ...update
   }
   const openTasks = open.concat(task)
   const closedTasks = closed.filter(task => task.id !== id)

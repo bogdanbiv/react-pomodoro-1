@@ -25,6 +25,14 @@ const getConfig = token => ({
   }
 })
 
+export const create = async task => {
+  const token = await getToken()
+
+  return axios
+    .post(`${api.dev}/tasks`, task, getConfig(token))
+    .then(response => response.data)
+}
+
 export const get = async () => {
   const token = await getToken()
 
@@ -33,18 +41,18 @@ export const get = async () => {
     .then(response => response.data)
 }
 
+export const update = async (id, task) => {
+  const token = await getToken()
+
+  return axios
+    .put(`${api.dev}/tasks/${id}`, task, getConfig(token))
+    .then(response => response.data)
+}
+
 export const remove = async id => {
   const token = await getToken()
 
   return axios
     .delete(`${api.dev}/tasks/${id}`, getConfig(token))
-    .then(response => response.data)
-}
-
-export const create = async task => {
-  const token = await getToken()
-
-  return axios
-    .post(`${api.dev}/tasks`, task, getConfig(token))
     .then(response => response.data)
 }
