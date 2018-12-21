@@ -88,44 +88,52 @@ export const removeTask = id => async (dispatch, getState) => {
   } catch (err) {}
 }
 
-export const closeTask = id => (dispatch, getState) => {
-  const data = { status: 'closed' }
-  const { open, closed } = getState().tasks
-  const task = {
-    ...open.find(task => task.id === id),
-    ...data
-  }
-  const openTasks = open.filter(task => task.id !== id)
-  const closedTasks = closed.concat(task)
+export const closeTask = id => async (dispatch, getState) => {
+  try {
+    const data = { status: 'closed' }
+    await update(id, data)
 
-  dispatch({
-    type: UPDATE_OPEN_TASKS,
-    tasks: openTasks
-  })
-  dispatch({
-    type: UPDATE_CLOSED_TASKS,
-    tasks: closedTasks
-  })
+    const { open, closed } = getState().tasks
+    const task = {
+      ...open.find(task => task.id === id),
+      ...data
+    }
+    const openTasks = open.filter(task => task.id !== id)
+    const closedTasks = closed.concat(task)
+
+    dispatch({
+      type: UPDATE_OPEN_TASKS,
+      tasks: openTasks
+    })
+    dispatch({
+      type: UPDATE_CLOSED_TASKS,
+      tasks: closedTasks
+    })
+  } catch (err) {}
 }
 
-export const reopenTask = id => (dispatch, getState) => {
-  const data = { status: 'open' }
-  const { open, closed } = getState().tasks
-  const task = {
-    ...closed.find(task => task.id === id),
-    ...data
-  }
-  const openTasks = open.concat(task)
-  const closedTasks = closed.filter(task => task.id !== id)
+export const reopenTask = id => async (dispatch, getState) => {
+  try {
+    const data = { status: 'open' }
+    await update(id, data)
 
-  dispatch({
-    type: UPDATE_OPEN_TASKS,
-    tasks: openTasks
-  })
-  dispatch({
-    type: UPDATE_CLOSED_TASKS,
-    tasks: closedTasks
-  })
+    const { open, closed } = getState().tasks
+    const task = {
+      ...closed.find(task => task.id === id),
+      ...data
+    }
+    const openTasks = open.concat(task)
+    const closedTasks = closed.filter(task => task.id !== id)
+
+    dispatch({
+      type: UPDATE_OPEN_TASKS,
+      tasks: openTasks
+    })
+    dispatch({
+      type: UPDATE_CLOSED_TASKS,
+      tasks: closedTasks
+    })
+  } catch (err) {}
 }
 
 export const updateCurrent = id => dispatch => {
