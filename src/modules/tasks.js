@@ -1,5 +1,5 @@
 import Immutable, { merge } from 'seamless-immutable'
-import { get, create, remove } from 'api'
+import { get, create, remove, update } from 'api'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
 export const UPDATE_CLOSED_TASKS = 'tasks/UPDATE_CLOSED_TASKS'
@@ -89,11 +89,11 @@ export const removeTask = id => async (dispatch, getState) => {
 }
 
 export const closeTask = id => (dispatch, getState) => {
-  const update = { status: 'closed' }
+  const data = { status: 'closed' }
   const { open, closed } = getState().tasks
   const task = {
     ...open.find(task => task.id === id),
-    ...update
+    ...data
   }
   const openTasks = open.filter(task => task.id !== id)
   const closedTasks = closed.concat(task)
@@ -109,11 +109,11 @@ export const closeTask = id => (dispatch, getState) => {
 }
 
 export const reopenTask = id => (dispatch, getState) => {
-  const update = { status: 'open' }
+  const data = { status: 'open' }
   const { open, closed } = getState().tasks
   const task = {
     ...closed.find(task => task.id === id),
-    ...update
+    ...data
   }
   const openTasks = open.concat(task)
   const closedTasks = closed.filter(task => task.id !== id)
