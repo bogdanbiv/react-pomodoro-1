@@ -45,11 +45,21 @@ export default (state = initialState, action) => {
 
 export const fetchTasks = () => async (dispatch, getState) => {
   try {
+    const open = []
+    const closed = []
     const result = await get()
+
+    await result.forEach(
+      task => (task.status === 'open' ? open.push(task) : closed.push(task))
+    )
 
     dispatch({
       type: UPDATE_OPEN_TASKS,
-      tasks: result
+      tasks: open
+    })
+    dispatch({
+      type: UPDATE_CLOSED_TASKS,
+      tasks: closed
     })
   } catch (err) {}
 }
