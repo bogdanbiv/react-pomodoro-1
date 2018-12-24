@@ -122,6 +122,13 @@ export const closeTask = id => async (dispatch, getState) => {
   } catch (err) {}
 }
 
+export const saveTaskTimer = id => async (dispatch, getState) => {
+  try {
+    const { spent } = getState().tasks.open.find(task => task.id === id)
+    update(id, { spent })
+  } catch (err) {}
+}
+
 export const reopenTask = id => async (dispatch, getState) => {
   try {
     const data = { status: 'open' }
