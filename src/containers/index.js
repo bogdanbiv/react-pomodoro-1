@@ -91,7 +91,9 @@ class App extends Component {
   }
 
   check = () => {
-    const { setMode } = this.props
+    const { setMode, saveTaskTimer } = this.props
+
+    saveTaskTimer(store.getState().tasks.current)
 
     this.setState({
       currentAction: 'play',
