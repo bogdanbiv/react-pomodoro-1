@@ -8,5 +8,3 @@ firebase.initializeApp({
   storageBucket: 'react-pomodoro-2018.appspot.com',
   messagingSenderId: '445613158447'
 })
-
-console.log(firebase)

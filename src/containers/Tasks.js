@@ -3,12 +3,22 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 
-import { updateCurrent, removeTask, closeTask, reopenTask } from 'modules/tasks'
+import {
+  updateCurrent,
+  removeTask,
+  closeTask,
+  reopenTask,
+  fetchTasks
+} from 'modules/tasks'
 import { setMode } from 'modules/timer'
 import NewTask from 'components/NewTask'
 import TaskList from 'components/TaskList'
 
 class Tasks extends Component {
+  componentDidMount() {
+    this.props.fetchTasks()
+  }
+
   onDelete = id => {
     const { removeTask, timerActions, updateCurrent } = this.props
     const confirmationMessage =
@@ -149,6 +159,7 @@ const mapDispatchToProps = dispatch =>
     {
       updateCurrent,
       removeTask,
+      fetchTasks,
       reopenTask,
       closeTask,
       setMode

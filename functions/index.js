@@ -17,70 +17,106 @@
 
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
+const firebaseHelper = require('firebase-functions-helper')
 admin.initializeApp()
 const express = require('express')
 const cookieParser = require('cookie-parser')()
+const bodyParser = require('body-parser')
 const cors = require('cors')({ origin: true })
+const db = admin.firestore()
 const app = express()
+db.settings({ timestampsInSnapshots: true })
 
-// Express middleware that validates Firebase ID Tokens passed in the Authorization HTTP header.
-// The Firebase ID token needs to be passed as a Bearer token in the Authorization HTTP header like this:
-// `Authorization: Bearer <Firebase ID Token>`.
-// when decoded successfully, the ID Token content will be added as `req.user`.
-const validateFirebaseIdToken = (req, res, next) => {
-  console.log('Check if request is authorized with Firebase ID token')
-
-  if (
-    (!req.headers.authorization ||
-      !req.headers.authorization.startsWith('Bearer ')) &&
-    !(req.cookies && req.cookies.__session)
-  ) {
-    console.error(
-      'No Firebase ID token was passed as a Bearer token in the Authorization header.',
-      'Make sure you authorize your request by providing the following HTTP header:',
-      'Authorization: Bearer <Firebase ID Token>',
-      'or by passing a "__session" cookie.'
-    )
-    res.status(403).send('Unauthorized')
-    return
-  }
-
-  let idToken
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer ')
-  ) {
-    console.log('Found "Authorization" header')
-    // Read the ID Token from the Authorization header.
-    idToken = req.headers.authorization.split('Bearer ')[1]
-  } else if (req.cookies) {
-    console.log('Found "__session" cookie')
-    // Read the ID Token from cookie.
-    idToken = req.cookies.__session
-  } else {
-    // No cookie
-    res.status(403).send('Unauthorized')
-    return
-  }
-  admin
-    .auth()
-    .verifyIdToken(idToken)
-    .then(decodedIdToken => {
-      console.log('ID Token correctly decoded', decodedIdToken)
-      req.user = decodedIdToken
-      return next()
-    })
-    .catch(error => {
-      console.error('Error while verifying Firebase ID token:', error)
-      res.status(403).send('Unauthorized')
-    })
-}
+const { tasks: tasksCollection } = require('./collections')
+const validateFirebaseIdToken = require('./auth')
+const { error, success, unauthorized, forbidden } = require('./status')
+const createTask = require('./models/task')
 
 app.use(cors)
 app.use(cookieParser)
 app.use(validateFirebaseIdToken)
-app.get('/hello', (req, res) => {
-  res.send(`Hello ${req.user.name}`)
+
+// Create new Task
+app.post('/tasks', (req, res) => {
+  const task = createTask(req.body, req.user.user_id)
+
+  db
+    .collection(tasksCollection)
+    .doc(task.id)
+    .set(task)
+
+  res.status(200).json(task)
+})
+
+// Update Task
+app.put('/tasks/:id', async (req, res) => {
+  try {
+    const taskRef = db.collection(tasksCollection).doc(req.params.id)
+    const task = await taskRef.get()
+
+    if (task.data().owner_id !== req.user.user_id) {
+      throw forbidden
+    }
+
+    taskRef.set(req.body, { merge: true })
+
+    res.status(success.status).json(success)
+  } catch (err) {
+    console.log(err)
+    res.status(err.status).json(err)
+  }
+})
+
+// Get a single Task
+app.get('/tasks/:id', async (req, res) => {
+  try {
+    const task = await db
+      .collection(tasksCollection)
+      .doc(req.params.id)
+      .get()
+
+    res.status(200).json(task.data())
+  } catch (err) {
+    console.log(err)
+    res.status(error.status).json(error)
+  }
+})
+
+// View all tasks
+app.get('/tasks', async (req, res) => {
+  try {
+    const tasks = []
+    const snapshot = await db
+      .collection(tasksCollection)
+      .where('owner_id', '==', req.user.user_id)
+      .get()
+
+    await snapshot.forEach(doc => tasks.push(doc.data()))
+    const sortedTasks = await tasks.sort((a, b) => b - a)
+
+    res.status(200).json(sortedTasks)
+  } catch (err) {
+    res.status(error.status).json(error)
+  }
+})
+
+// Delete a task
+app.delete('/tasks/:id', async (req, res) => {
+  try {
+    const taskRef = db.collection(tasksCollection).doc(req.params.id)
+    const task = await taskRef.get()
+
+    if (task.data().owner_id !== req.user.user_id) {
+      throw forbidden
+    }
+
+    taskRef.delete()
+
+    res.status(success.status).json(success)
+  } catch (err) {
+    console.log(err)
+    res.status(err.status).json(err)
+  }
 })
 
 // This HTTPS endpoint can only be accessed by your Firebase Users.

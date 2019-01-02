@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { decrement, setMode } from 'modules/timer'
-import { incrementTaskTime } from 'modules/tasks'
+import { incrementTaskTime, saveTaskTimer } from 'modules/tasks'
 import { store } from 'store'
 
 import Timer from './Timer'
@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   stop = () => {
-    const { setMode, mode } = this.props
+    const { setMode, mode, saveTaskTimer } = this.props
 
     this.setState({
       currentAction: 'play',
@@ -83,13 +83,17 @@ class App extends Component {
       options: true
     })
 
+    saveTaskTimer(store.getState().tasks.current)
+
     document.title = this.state.title
     clearInterval(this.interval)
     setMode(mode)
   }
 
   check = () => {
-    const { setMode } = this.props
+    const { setMode, saveTaskTimer } = this.props
+
+    saveTaskTimer(store.getState().tasks.current)
 
     this.setState({
       currentAction: 'play',
@@ -121,11 +125,11 @@ class App extends Component {
     return (
       <Main className="App">
         <TimerContainer>
-          <Login />
-          <Timer timerState={timerState} timerActions={timerActions} />
+          <Login timerActions={timerActions} />
+          <Timer timerActions={timerActions} timerState={timerState} />
         </TimerContainer>
         <TasksContainer>
-          <Tasks timerState={timerState} timerActions={timerActions} />
+          <Tasks timerActions={timerActions} timerState={timerState} />
         </TasksContainer>
       </Main>
     )
@@ -165,6 +169,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       incrementTaskTime,
+      saveTaskTimer,
       decrement,
       setMode
     },
