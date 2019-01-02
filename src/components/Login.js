@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase'
 import styled from 'styled-components'
 
+import { resetTasks } from 'modules/tasks'
 import { setUser } from 'modules/user'
 
 class Login extends PureComponent {
@@ -16,12 +17,19 @@ class Login extends PureComponent {
 
   auth = () => firebase.auth().signInWithRedirect(this.provider)
 
-  logout = () =>
+  logout = () => {
+    const { timerActions, setUser, resetTasks } = this.props
+
+    timerActions.stop()
     firebase
       .auth()
       .signOut()
-      .then(() => this.props.setUser(null))
+      .then(() => {
+        resetTasks()
+        setUser(null)
+      })
       .catch(error => alert('Logout failed.\nPlease try again.'))
+  }
 
   handleClickOutside() {
     this.setState({ userMenu: false })
@@ -157,6 +165,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      resetTasks,
       setUser
     },
     dispatch

@@ -125,11 +125,11 @@ class App extends Component {
     return (
       <Main className="App">
         <TimerContainer>
-          <Login />
-          <Timer timerState={timerState} timerActions={timerActions} />
+          <Login timerActions={timerActions} />
+          <Timer timerActions={timerActions} timerState={timerState} />
         </TimerContainer>
         <TasksContainer>
-          <Tasks timerState={timerState} timerActions={timerActions} />
+          <Tasks timerActions={timerActions} timerState={timerState} />
         </TasksContainer>
       </Main>
     )

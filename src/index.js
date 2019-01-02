@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react'
 import { persistor, store } from './store'
 
 import App from './containers'
+import { fetchTasks } from 'modules/tasks'
 import { setUser } from 'modules/user'
 
 import './firebase'
@@ -19,6 +20,7 @@ firebase
   .getRedirectResult()
   .then(auth => {
     if (auth.user) {
+      fetchTasks()(dispatch)
       setUser({
         name: auth.user.displayName,
         id: auth.user.uid

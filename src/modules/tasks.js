@@ -43,6 +43,21 @@ export default (state = initialState, action) => {
   }
 }
 
+export const resetTasks = () => (dispatch, getState) => {
+  dispatch({
+    type: UPDATE_OPEN_TASKS,
+    tasks: []
+  })
+  dispatch({
+    type: UPDATE_CLOSED_TASKS,
+    tasks: []
+  })
+  dispatch({
+    type: UPDATE_CURRENT,
+    current: null
+  })
+}
+
 export const fetchTasks = () => async (dispatch, getState) => {
   try {
     const open = []
