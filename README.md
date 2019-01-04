@@ -1,1 +1,1 @@
-<h1 align="center"><img src="/logo-new.jpg" width="100%" alt="React Pomodoro" /></h1>
+<h1 align="center"><img src="/logo-shadow.jpg" width="350px" alt="React Pomodoro" /></h1>
