@@ -75,7 +75,7 @@ class App extends Component {
   }
 
   stop = () => {
-    const { setMode, mode, saveTaskTimer } = this.props
+    const { setMode, mode, saveTaskTimer, current } = this.props
 
     this.setState({
       currentAction: 'play',
@@ -83,7 +83,7 @@ class App extends Component {
       options: true
     })
 
-    saveTaskTimer(store.getState().tasks.current)
+    saveTaskTimer(current)
 
     document.title = this.state.title
     clearInterval(this.interval)
@@ -91,9 +91,9 @@ class App extends Component {
   }
 
   check = () => {
-    const { setMode, saveTaskTimer } = this.props
+    const { setMode, saveTaskTimer, current } = this.props
 
-    saveTaskTimer(store.getState().tasks.current)
+    saveTaskTimer(current)
 
     this.setState({
       currentAction: 'play',
@@ -162,6 +162,7 @@ const TasksContainer = styled.section`
 
 const mapStateToProps = state => ({
   counter: state.timer.counter,
+  current: state.tasks.current,
   mode: state.timer.mode
 })
 
