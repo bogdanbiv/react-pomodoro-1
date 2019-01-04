@@ -11,6 +11,8 @@ import {
   fetchTasks
 } from 'modules/tasks'
 import { setMode } from 'modules/timer'
+import { saveTaskTimer } from 'modules/tasks'
+
 import NewTask from 'components/NewTask'
 import TaskList from 'components/TaskList'
 
@@ -26,8 +28,8 @@ class Tasks extends Component {
     const r = window.confirm(confirmationMessage)
 
     if (r === true) {
-      timerActions.stop()
-      updateCurrent('')
+      //timerActions.stop()
+      //updateCurrent('')
       removeTask(id)
     }
   }
@@ -39,8 +41,8 @@ class Tasks extends Component {
     const r = window.confirm(confirmationMessage)
 
     if (r === true) {
-      timerActions.stop()
-      updateCurrent('')
+      //timerActions.stop()
+      //updateCurrent('')
       closeTask(id)
     }
   }
@@ -56,12 +58,21 @@ class Tasks extends Component {
   }
 
   onPlay = id => {
-    const { setMode, timerActions, updateCurrent } = this.props
+    const {
+      setMode,
+      timerActions,
+      timerState,
+      updateCurrent,
+      saveTaskTimer,
+      current
+    } = this.props
 
-    timerActions.stop()
+    saveTaskTimer(current)
     updateCurrent(id)
-    setMode('pomodoro')
-    timerActions.play()
+
+    if (!timerState.running) {
+      timerActions.play()
+    }
   }
 
   onStop = () => {
@@ -151,13 +162,15 @@ const TaskBox = styled.section`
 const mapStateToProps = state => ({
   openTasks: state.tasks.open,
   closedTasks: state.tasks.closed,
-  current: state.tasks.current
+  current: state.tasks.current,
+  mode: state.timer.mode
 })
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       updateCurrent,
+      saveTaskTimer,
       removeTask,
       fetchTasks,
       reopenTask,
