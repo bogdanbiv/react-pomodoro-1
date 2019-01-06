@@ -1,5 +1,6 @@
 import Immutable, { merge } from 'seamless-immutable'
 import { get, create, remove, update } from 'api'
+import { getToday } from 'utils'
 
 export const UPDATE_OPEN_TASKS = 'tasks/CREATE_CLOSED_TASK'
 export const UPDATE_CLOSED_TASKS = 'tasks/UPDATE_CLOSED_TASKS'
@@ -177,9 +178,7 @@ export const updateCurrent = id => dispatch => {
 
 export const incrementTaskTime = task => (dispatch, getState) => {
   const { open, current } = getState().tasks
-  const date = new Date()
-  date.setHours(0, 0, 0, 0)
-  const today = date.getTime()
+  const today = getToday()
 
   const tasks = open.map(task => {
     let increment = {}
