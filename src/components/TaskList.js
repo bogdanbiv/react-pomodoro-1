@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { timeFormatter } from 'utils'
+import { timeFormatter, getToday } from 'utils'
 
 class TaskList extends Component {
   render = () => {
     const { data, active, current, title, actions, isRunning } = this.props
+    const today = getToday()
 
     if (!data || !data.length) {
       return null
@@ -22,6 +23,12 @@ class TaskList extends Component {
                   <strong>Time spent: </strong>
                   {timeFormatter(item.spent.total) || '0m'}
                 </MiscEntry>
+                {item.spent.daily[today] && (
+                  <MiscEntry>
+                    <strong>Today: </strong>
+                    {timeFormatter(item.spent.daily[today]) || '0m'}
+                  </MiscEntry>
+                )}
                 {!!item.estimate && (
                   <MiscEntry>
                     <strong>Time planned: </strong>
