@@ -22,27 +22,23 @@ class Tasks extends Component {
   }
 
   onDelete = id => {
-    const { removeTask, timerActions, updateCurrent } = this.props
+    const { removeTask } = this.props
     const confirmationMessage =
       "Are you sure you want to delete this task? This action can't be undone."
     const r = window.confirm(confirmationMessage)
 
     if (r === true) {
-      //timerActions.stop()
-      //updateCurrent('')
       removeTask(id)
     }
   }
 
   onClose = id => {
-    const { closeTask, timerActions, updateCurrent } = this.props
+    const { closeTask } = this.props
     const confirmationMessage =
       'Is this task done? \nCongratulations! What a productive day 🎉'
     const r = window.confirm(confirmationMessage)
 
     if (r === true) {
-      //timerActions.stop()
-      //updateCurrent('')
       closeTask(id)
     }
   }
@@ -59,7 +55,6 @@ class Tasks extends Component {
 
   onPlay = id => {
     const {
-      setMode,
       timerActions,
       timerState,
       updateCurrent,
