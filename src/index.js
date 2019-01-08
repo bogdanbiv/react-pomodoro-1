@@ -9,6 +9,7 @@ import { persistor, store } from './store'
 import App from './containers'
 import { fetchTasks } from 'modules/tasks'
 import { setUser } from 'modules/user'
+import { setExpand } from 'modules/app'
 
 import './firebase'
 import './index.css'
@@ -22,6 +23,7 @@ firebase
   .then(auth => {
     if (auth.user) {
       fetchTasks()(dispatch)
+      setExpand()(dispatch)
       setUser({
         name: auth.user.displayName,
         id: auth.user.uid,

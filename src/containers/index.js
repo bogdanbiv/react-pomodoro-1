@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
+import { setExpand } from 'modules/app'
 import { decrement, setMode } from 'modules/timer'
 import { incrementTaskTime, saveTaskTimer } from 'modules/tasks'
 import { store } from 'store'
@@ -115,8 +116,19 @@ class App extends Component {
     }
   }
 
+  componentDidMount() {
+    const { user, setExpand } = this.props
+
+    setExpand(user ? null : 'timer')
+  }
+
   render = () => {
     const timerState = this.state
+    const { expand, user } = this.props
+
+    console.log(expand)
+    console.log(user)
+
     const timerActions = {
       play: this.play,
       stop: this.stop,
@@ -124,11 +136,11 @@ class App extends Component {
     }
     return (
       <Main className="App">
-        <TimerContainer>
+        <TimerContainer expand={expand}>
           <Login timerActions={timerActions} />
           <Timer timerActions={timerActions} timerState={timerState} />
         </TimerContainer>
-        <TasksContainer>
+        <TasksContainer expand={expand}>
           <Tasks timerActions={timerActions} timerState={timerState} />
         </TasksContainer>
       </Main>
@@ -151,6 +163,14 @@ const TimerContainer = styled.section`
   align-items: center;
   justify-content: center;
   position: relative;
+
+  transition: 0.85s all ease-in-out;
+  position: absolute;
+  z-index: 2;
+  left: 0px;
+  top: 0px;
+
+  ${props => props.expand === 'timer' && 'width: 100%'};
 `
 
 const TasksContainer = styled.section`
@@ -158,12 +178,24 @@ const TasksContainer = styled.section`
   height: 100vh;
   float: left;
   overflow-y: auto;
+  opacity: 1;
+  overflow-y: scroll;
+
+  transition: 0.5s all ease-in-out;
+  position: absolute;
+  z-index: 1;
+  right: 0px;
+  top: 0px;
+
+  ${props => props.expand === 'timer' && 'opacity: 0;'};
 `
 
 const mapStateToProps = state => ({
   counter: state.timer.counter,
   current: state.tasks.current,
-  mode: state.timer.mode
+  expand: state.app.expand,
+  mode: state.timer.mode,
+  user: state.user.data
 })
 
 const mapDispatchToProps = dispatch =>
@@ -171,6 +203,7 @@ const mapDispatchToProps = dispatch =>
     {
       incrementTaskTime,
       saveTaskTimer,
+      setExpand,
       decrement,
       setMode
     },

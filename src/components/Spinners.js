@@ -1,16 +1,7 @@
 import React, { PureComponent } from 'react'
-import { bindActionCreators } from 'redux'
-import enhanceWithClickOutside from 'react-click-outside'
-import { connect } from 'react-redux'
-import firebase from 'firebase/app'
-import 'firebase/auth'
 import styled from 'styled-components'
 
-import { resetTasks } from 'modules/tasks'
-import { setUser } from 'modules/user'
-import { setExpand } from 'modules/app'
-
-class Login extends PureComponent {
+class Spinners extends PureComponent {
   state = {
     userMenu: false
   }
@@ -164,21 +155,3 @@ const Logo = styled.h2`
     top: -21px;
   }
 `
-
-const mapStateToProps = state => ({
-  user: state.user.data
-})
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      resetTasks,
-      setExpand,
-      setUser
-    },
-    dispatch
-  )
-
-export default connect(mapStateToProps, mapDispatchToProps)(
-  enhanceWithClickOutside(Login)
-)
