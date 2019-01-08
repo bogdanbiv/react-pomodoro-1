@@ -23,7 +23,9 @@ firebase
       fetchTasks()(dispatch)
       setUser({
         name: auth.user.displayName,
-        id: auth.user.uid
+        id: auth.user.uid,
+        photo: auth.user.photoURL,
+        email: auth.user.email
       })(dispatch)
     }
   })
