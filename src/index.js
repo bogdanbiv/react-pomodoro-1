@@ -1,5 +1,6 @@
 import React from 'react'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/lib/integration/react'
