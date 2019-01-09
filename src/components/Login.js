@@ -6,6 +6,8 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import styled from 'styled-components'
 
+import Spinner from 'components/Spinner'
+
 import { resetTasks } from 'modules/tasks'
 import { setUser } from 'modules/user'
 import { setExpand } from 'modules/app'
@@ -43,7 +45,7 @@ class Login extends PureComponent {
   }
 
   render() {
-    const { user } = this.props
+    const { user, loading } = this.props
     const { userMenu } = this.state
 
     return (
@@ -64,7 +66,9 @@ class Login extends PureComponent {
               )}
             </Greetings>
           ) : (
-            <Link onClick={this.auth}>Login with Google</Link>
+            <Link onClick={this.auth}>
+              {loading ? <SmallSpinner /> : 'Login with Google'}
+            </Link>
           )}
         </div>
       </Header>
@@ -135,9 +139,25 @@ const Link = styled.span`
   transition: all 0.1s linear;
   color: #f3eeee;
 
+  background-color: #d76b6b;
+  height: 30px;
+  padding: 10px 15px 0px;
+  border-radius: 3px;
+  line-height: 1em;
+  display: block;
+  text-decoration: none;
+  margin-top: 3px;
+
   &:hover {
     color: #fff;
   }
+`
+
+const SmallSpinner = styled(Spinner)`
+  width: 24px;
+  height: 39px;
+  margin-top: -10px;
+  margin-left: 0px;
 `
 
 const Logo = styled.h2`
@@ -166,7 +186,8 @@ const Logo = styled.h2`
 `
 
 const mapStateToProps = state => ({
-  user: state.user.data
+  user: state.user.data,
+  loading: state.user.loading
 })
 
 const mapDispatchToProps = dispatch =>
