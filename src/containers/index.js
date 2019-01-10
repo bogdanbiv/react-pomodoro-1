@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import { setExpand } from 'modules/app'
+import { setLoading as setUserLoading } from 'modules/user'
 import { decrement, setMode } from 'modules/timer'
 import { incrementTaskTime, saveTaskTimer } from 'modules/tasks'
 import { store } from 'store'
@@ -117,9 +118,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const { user, setExpand } = this.props
+    const { user, setExpand, setUserLoading } = this.props
 
     setExpand(user ? null : 'timer')
+    setUserLoading(true)
   }
 
   render = () => {
@@ -202,6 +204,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       incrementTaskTime,
+      setUserLoading,
       saveTaskTimer,
       setExpand,
       decrement,
