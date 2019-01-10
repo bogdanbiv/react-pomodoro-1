@@ -35,7 +35,7 @@ export const setUser = data => dispatch => {
 
 export const setLoading = loading => dispatch => {
   dispatch({
-    type: UPDATE_USER,
+    type: SET_LOADER,
     loading
   })
 }

@@ -8,7 +8,7 @@ import { persistor, store } from './store'
 
 import App from './containers'
 import { fetchTasks } from 'modules/tasks'
-import { setUser } from 'modules/user'
+import { setUser, setLoading } from 'modules/user'
 import { setExpand } from 'modules/app'
 
 import './firebase'
@@ -21,6 +21,8 @@ firebase
   .auth()
   .getRedirectResult()
   .then(auth => {
+    setLoading(false)(dispatch)
+
     if (auth.user) {
       fetchTasks()(dispatch)
       setExpand()(dispatch)

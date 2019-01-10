@@ -26,3 +26,35 @@
 [debug] [2019-01-08T21:35:59.397Z] Starting @google-cloud/functions-emulator
 [debug] [2019-01-08T21:36:03.732Z] Parsing function triggers
 [info] ✔  functions: app: http://localhost:5000/react-pomodoro-2018/us-central1/app
+[debug] [2019-01-10T11:36:31.942Z] ----------------------------------------------------------------------
+[debug] [2019-01-10T11:36:31.946Z] Command:       /usr/local/Cellar/node/11.1.0/bin/node /usr/local/bin/firebase serve --only functions
+[debug] [2019-01-10T11:36:31.946Z] CLI Version:   6.2.2
+[debug] [2019-01-10T11:36:31.946Z] Platform:      darwin
+[debug] [2019-01-10T11:36:31.946Z] Node Version:  v11.1.0
+[debug] [2019-01-10T11:36:31.983Z] Time:          Thu Jan 10 2019 09:36:31 GMT-0200 (Horário de Verão de Brasília)
+[debug] [2019-01-10T11:36:31.983Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-01-10T11:36:32.012Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-01-10T11:36:32.012Z] > authorizing via signed-in user
+[debug] [2019-01-10T11:36:32.012Z] [iam] checking project react-pomodoro-2018 for permissions ["firebase.projects.get"]
+[debug] [2019-01-10T11:36:32.016Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-01-10T11:36:32.016Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-01-10T11:36:32.514Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-10T11:36:32.576Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018:testIamPermissions  
+
+[debug] [2019-01-10T11:36:33.910Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-10T11:36:33.912Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/react-pomodoro-2018  
+ 
+[debug] [2019-01-10T11:36:43.750Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/filipemerker/Desktop/projects/personal/react-pomodoro'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2019-01-10T11:36:45.345Z] Fetching environment
+[debug] [2019-01-10T11:36:45.349Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/445613158447:getServerAppConfig  
+ 
+[debug] [2019-01-10T11:37:01.415Z] <<< HTTP RESPONSE 200
+[debug] [2019-01-10T11:37:01.417Z] Starting @google-cloud/functions-emulator
+[debug] [2019-01-10T11:37:07.778Z] Parsing function triggers
+[info] ✔  functions: app: http://localhost:5000/react-pomodoro-2018/us-central1/app
